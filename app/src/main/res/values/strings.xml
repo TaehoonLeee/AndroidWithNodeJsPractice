@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NodeJs</string>
+    <string name="get">GET</string>
 </resources>

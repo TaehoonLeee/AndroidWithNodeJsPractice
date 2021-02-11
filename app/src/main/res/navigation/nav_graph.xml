@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/getFragment">
+
+    <fragment
+        android:id="@+id/getFragment"
+        android:name="com.example.nodejs.UI.GET.GetFragment"
+        android:label="get_fragment"
+        tools:layout="@layout/get_fragment" />
+</navigation>
