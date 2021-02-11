@@ -10,4 +10,9 @@
         android:name="com.example.nodejs.UI.GET.GetFragment"
         android:label="get_fragment"
         tools:layout="@layout/get_fragment" />
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.example.nodejs.UI.POST.PostFragment"
+        android:label="fragment_post"
+        tools:layout="@layout/fragment_post" />
 </navigation>

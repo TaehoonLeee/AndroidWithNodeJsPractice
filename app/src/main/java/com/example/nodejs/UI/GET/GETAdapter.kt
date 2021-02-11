@@ -17,12 +17,7 @@ class GETAdapter : RecyclerView.Adapter<GETAdapter.GETViewHolder>() {
         return GETViewHolder.from(parent)
     }
 
-    override fun getItemCount() : Int{
-        if (users.size > 0) {
-            repeat(users.size) {
-                Log.e("In adapter", users[it].id)
-            }
-        }
+    override fun getItemCount() : Int {
         return users.size
     }
 
