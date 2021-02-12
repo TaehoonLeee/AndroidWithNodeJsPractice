@@ -19,9 +19,9 @@ class SelfSigningHelper {
     }
 
     private fun setUp() {
-        var certificateFactory : CertificateFactory
-        var certificate : Certificate
-        var inputStream : InputStream
+        val certificateFactory : CertificateFactory
+        val certificate : Certificate
+        val inputStream : InputStream
 
         try {
             certificateFactory = CertificateFactory.getInstance("X.509")
@@ -48,10 +48,10 @@ class SelfSigningHelper {
     fun setSSLOKHttp(builder : OkHttpClient.Builder, target : String) : OkHttpClient.Builder {
         builder.sslSocketFactory(getInstance().sslContext.socketFactory, (getInstance().trustManagerFactory.trustManagers[0]) as X509TrustManager)
 
-        val _hostnameVerifier = HostnameVerifier{ hostname, _ ->
+        val hostnameVerifier = HostnameVerifier{ hostname, _ ->
             hostname!!.contentEquals(target)
         }
-        builder.hostnameVerifier(_hostnameVerifier)
+        builder.hostnameVerifier(hostnameVerifier)
 
         return builder
     }
