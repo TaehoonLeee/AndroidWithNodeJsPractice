@@ -1,5 +1,6 @@
 package com.example.nodejs.Network
 
+import com.example.nodejs.Model.Message
 import com.example.nodejs.Model.Messages
 import com.example.nodejs.Model.User
 import com.example.nodejs.Model.Users
@@ -19,4 +20,10 @@ interface NodeService {
 
     @GET("messages")
     fun getMessages() : Single<Messages>
+
+    @FormUrlEncoded
+    @POST("messages")
+    fun addMessage(@Field("sender") sender : String,
+                   @Field("message") message : String,
+                   @Field("timeStamp") timeStamp : String) : Call<Message>
 }

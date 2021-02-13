@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:layout_marginBottom="@dimen/standard_quarter"
     xmlns:tools="http://schemas.android.com/tools">
 
     <View

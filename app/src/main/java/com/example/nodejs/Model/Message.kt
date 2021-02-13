@@ -14,5 +14,5 @@ data class Messages(
 data class Message(
         val sender : String,
         val message : String,
-        val timeStamp : Time
+        val timeStamp : String
 )

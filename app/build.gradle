@@ -78,4 +78,8 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 
+    implementation ('io.socket:socket.io-client:1.0.0') {
+        exclude group : 'org.json', module : 'json'
+    }
+
 }

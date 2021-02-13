@@ -45,11 +45,11 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
                 when (itemViewType) {
                     RECEIVER -> {
                         txtReceiverMessage.text = message.message
-                        txtReceiverDateTime.text = message.timeStamp.toString()
+                        txtReceiverDateTime.text = message.timeStamp
                     }
                     SENDER -> {
                         txtSenderMessage.text = message.message
-                        txtSenderDateTime.text = message.timeStamp.toString()
+                        txtSenderDateTime.text = message.timeStamp
                     }
                 }
             }
