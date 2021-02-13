@@ -1,15 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UI.chat.ChatFragment"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/bar"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/standard_quarter"
+                    android:background="#668E8E8E" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/msgToSend"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="@string/chat"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/send_message"
+                        android:inputType="text"
+                        android:padding="@dimen/standard_half"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnSend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/round_button"
+                        android:contentDescription="@string/send_button"
+                        android:src="@drawable/ic_baseline_arrow_circle_up_24" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_dark"
@@ -17,52 +73,10 @@
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@string/chat"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#668E8E8E"
-        android:layout_marginTop="@dimen/standard_quarter"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <EditText
-            android:id="@+id/msgToSend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/send_message"
-            android:autofillHints="@string/chat"
-            android:textSize="12sp"
-            android:layout_weight="1"
-            android:padding="@dimen/standard_half"
-            android:background="@android:color/transparent"
-            android:inputType="text" />
-
-        <ImageButton
-            android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
-            android:src="@drawable/ic_baseline_arrow_circle_up_24"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@string/send_button"/>
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

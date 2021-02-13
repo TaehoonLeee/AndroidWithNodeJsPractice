@@ -16,3 +16,9 @@ data class Message(
         val message : String,
         val timeStamp : String
 )
+
+@JsonClass(generateAdapter = true)
+data class Res_Message(
+        val code : Int,
+        val msg : String
+)

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nodejs.Model.Message
+import com.example.nodejs.Model.Res_Message
 import com.example.nodejs.Repository.NodeRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import retrofit2.Call
@@ -30,14 +31,15 @@ class ChatViewModel @ViewModelInject constructor(
     }
 
     fun addMessage(sender : String, message : String, timeStamp : String) {
-        Log.e("ViewModel", "message : $message, $timeStamp")
-        nodeRepository.addMessage(sender, message, timeStamp).enqueue(object : Callback<Message> {
-            override fun onFailure(call: Call<Message>, t: Throwable) {
-
+        nodeRepository.addMessage(sender, message, timeStamp).enqueue(object : Callback<Res_Message> {
+            override fun onFailure(call: Call<Res_Message>, t: Throwable) {
+                TODO("Not yet implemented")
             }
 
-            override fun onResponse(call: Call<Message>, response: Response<Message>) {
-
+            override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {
+                if( response.isSuccessful ) {
+                    onGetMessages()
+                }
             }
         })
     }

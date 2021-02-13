@@ -1,10 +1,7 @@
 package com.example.nodejs.Repository
 
 import android.util.Log
-import com.example.nodejs.Model.Message
-import com.example.nodejs.Model.Messages
-import com.example.nodejs.Model.User
-import com.example.nodejs.Model.Users
+import com.example.nodejs.Model.*
 import com.example.nodejs.Network.NodeService
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -30,7 +27,7 @@ class NodeRepository @Inject constructor(
             .subscribeOn(Schedulers.io())
     }
 
-    fun addMessage(sender : String, message : String, timeStamp : String) : Call<Message> {
+    fun addMessage(sender : String, message : String, timeStamp : String) : Call<Res_Message> {
         return nodeService.addMessage(sender, message, timeStamp)
     }
 }
