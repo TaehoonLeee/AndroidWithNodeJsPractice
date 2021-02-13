@@ -22,8 +22,8 @@ class NodeRepository @Inject constructor(
         return nodeService.setData(id, password)
     }
 
-    fun getMessages() : Single<Messages> {
-        return nodeService.getMessages()
+    fun getMessages(name : String) : Single<Messages> {
+        return nodeService.getMessages(name)
             .subscribeOn(Schedulers.io())
     }
 

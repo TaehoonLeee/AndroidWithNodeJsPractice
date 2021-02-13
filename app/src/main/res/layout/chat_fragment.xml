@@ -16,50 +16,71 @@
             android:layout_height="wrap_content"
             android:weightSum="1">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/topText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/standard_half"
+                android:background="@drawable/oval_button"
+                android:backgroundTint="@android:color/darker_gray"
+                android:text="@string/topMessage"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:elevation="@dimen/standard_full"/>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentBottom="true">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvChat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="@dimen/standard_quarter"
-                    android:background="#668E8E8E" />
-
+                android:layout_below="@id/topText"
+                android:layout_marginTop="@dimen/standard_half">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:layout_alignParentBottom="true">
 
-                    <EditText
-                        android:id="@+id/msgToSend"
-                        android:layout_width="0dp"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvChat"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:autofillHints="@string/chat"
-                        android:background="@android:color/transparent"
-                        android:hint="@string/send_message"
-                        android:inputType="text"
-                        android:padding="@dimen/standard_half"
-                        android:textSize="18sp" />
+                        android:clipToPadding="false" />
 
-                    <ImageButton
-                        android:id="@+id/btnSend"
-                        android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="@dimen/standard_quarter"
+                        android:background="#668E8E8E" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/round_button"
-                        android:contentDescription="@string/send_button"
-                        android:src="@drawable/ic_baseline_arrow_circle_up_24" />
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/msgToSend"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:autofillHints="@string/chat"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/send_message"
+                            android:inputType="text"
+                            android:padding="@dimen/standard_half"
+                            android:textSize="18sp" />
+
+                        <ImageButton
+                            android:id="@+id/btnSend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/round_button"
+                            android:contentDescription="@string/send_button"
+                            android:src="@drawable/ic_baseline_arrow_circle_up_24" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>

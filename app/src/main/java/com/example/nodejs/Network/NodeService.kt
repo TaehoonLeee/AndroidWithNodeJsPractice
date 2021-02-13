@@ -15,8 +15,8 @@ interface NodeService {
     fun setData(@Field("id") id : String,
                 @Field("password") password : String) : Call<User>
 
-    @GET("messages")
-    fun getMessages() : Single<Messages>
+    @GET("messages/{name}")
+    fun getMessages(@Path("name") name : String) : Single<Messages>
 
     @FormUrlEncoded
     @POST("messages")

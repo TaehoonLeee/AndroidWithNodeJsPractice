@@ -1,11 +1,15 @@
 package com.example.nodejs.UI.chat
 
+import android.app.Activity
+import android.inputmethodservice.InputMethodService
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.Model.Message
 import com.example.nodejs.R
@@ -24,26 +28,14 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
 
     private val chatViewModel : ChatViewModel by viewModels<ChatViewModel>()
     private lateinit var chatAdapter : ChatAdapter
-    private lateinit var socket : Socket
-//    private var firstMessageList : MutableList<Message> = mutableListOf()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        try {
-//            socket = IO.socket("http://10.0.2.2:3001/")
-//        } catch (e : Exception) { e.printStackTrace() }
-//
-//        socket.connect()
-//        socket.on(Socket.EVENT_CONNECT, Emitter.Listener {
-//            socket.emit("first")
-//        })
-    }
+    private val args : ChatFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatAdapter = ChatAdapter()
+        val name = args.name
+
+        chatAdapter = ChatAdapter(name)
 
         rvChat.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -55,13 +47,32 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             val formatter = DateTimeFormatter.ofPattern("h:mm a")
             val formatted = currentTime.format(formatter)
 
-            chatViewModel.addMessage("master", msgToSend.text.toString(), formatted)
+            chatViewModel.addMessage(name, msgToSend.text.toString(), formatted)
             msgToSend.text = null
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        chatViewModel.messages.observe(viewLifecycleOwner, Observer {
+            chatAdapter.setMessages(it)
+        })
+
+    }
+
+}
+
+
+
+//        try {
+//            socket = IO.socket("http://10.0.2.2:3001/")
+//        } catch (e : Exception) { e.printStackTrace() }
+//
+//        socket.connect()
+//        socket.on(Socket.EVENT_CONNECT, Emitter.Listener {
+//            socket.emit("first")
+//        })
 
 //        socket.on("first", Emitter.Listener {
 //            val jsonArray = it[0] as JSONArray
@@ -75,13 +86,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
 //            }
 //        })
 
-        chatViewModel.messages.observe(viewLifecycleOwner, Observer {
-            chatAdapter.setMessages(it)
-        })
 //        repeat(firstMessageList.size) {
 //            Log.e("ActivityCreated", firstMessageList[it].timeStamp)
 //        }
 //        chatAdapter.setMessages(firstMessageList)
-    }
-
-}

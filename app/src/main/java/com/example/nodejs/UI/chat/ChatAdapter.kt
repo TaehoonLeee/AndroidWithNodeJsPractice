@@ -9,7 +9,7 @@ import com.example.nodejs.R
 import kotlinx.android.synthetic.main.item_chat_receiver.view.*
 import kotlinx.android.synthetic.main.item_chat_sender.view.*
 
-class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+class ChatAdapter(val name : String) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     private var messages : List<Message> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -31,7 +31,7 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (messages[position].sender == "master") SENDER else RECEIVER
+        return if (messages[position].sender == name) SENDER else RECEIVER
     }
 
     fun setMessages(messages : List<Message>) {

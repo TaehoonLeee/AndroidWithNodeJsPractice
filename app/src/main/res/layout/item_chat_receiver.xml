@@ -1,43 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/chat_sender"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_marginBottom="@dimen/standard_quarter"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chat_receiver_bubble">
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/standard_quarter">
 
         <TextView
-            android:id="@+id/txtReceiverMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_marginStart="@dimen/standard_full"
-            android:layout_marginEnd="@dimen/standard_quarter"
-            android:padding="@dimen/standard_quarter"
-            tools:text="@tools:sample/lorem/random"
-            tools:maxLines="2"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:text="Opponent"
+            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
-    <TextView
-        android:id="@+id/txtReceiverDateTime"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/standard_half"
-        android:layout_marginEnd="@dimen/standard_half"
-        android:textSize="12sp"
-        tools:text="@tools:sample/date/hhmm"/>
+        android:orientation="horizontal">
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chat_receiver_bubble">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/txtReceiverMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginStart="@dimen/standard_full"
+                android:layout_marginEnd="@dimen/standard_quarter"
+                android:padding="@dimen/standard_quarter"
+                android:maxWidth="300sp"
+                tools:text="@tools:sample/lorem/random"
+                tools:maxLines="2"/>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <TextView
+            android:id="@+id/txtReceiverDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_half"
+            android:layout_gravity="bottom"
+            tools:text="@tools:sample/date/hhmm"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,9 +1,11 @@
 package com.example.nodejs.UI.chat
 
 import android.util.Log
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.nodejs.Model.Message
 import com.example.nodejs.Model.Res_Message
@@ -14,18 +16,23 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ChatViewModel @ViewModelInject constructor(
-    private val nodeRepository: NodeRepository
+    private val nodeRepository: NodeRepository,
+    @Assisted private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     private val _messages = MutableLiveData<List<Message>>()
     val messages : LiveData<List<Message>> = _messages
 
+    private var name : String = savedStateHandle.get<String>("name")!!
+
     init {
-        onGetMessages()
+        Log.e("ViewModel", "Init")
+        onGetMessages(name)
     }
 
-    private fun onGetMessages() {
-        nodeRepository.getMessages()
+    private fun onGetMessages(name : String) {
+        Log.e("ViewModel", name)
+        nodeRepository.getMessages(name)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe{ messages -> _messages.value = messages.messages }
     }
@@ -37,8 +44,8 @@ class ChatViewModel @ViewModelInject constructor(
             }
 
             override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {
-                if( response.isSuccessful ) {
-                    onGetMessages()
+                if (response.isSuccessful) {
+                    onGetMessages(name)
                 }
             }
         })

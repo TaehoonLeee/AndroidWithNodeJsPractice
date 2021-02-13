@@ -19,6 +19,7 @@
         android:textSize="12sp"
         android:layout_marginEnd="@dimen/standard_half"
         android:layout_marginStart="@dimen/standard_half"
+        android:layout_gravity="bottom"
         tools:text="@tools:sample/date/hhmm"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -35,6 +36,7 @@
             android:layout_marginStart="@dimen/standard_quarter"
             android:layout_marginEnd="@dimen/standard_full"
             android:padding="@dimen/standard_quarter"
+            android:maxWidth="300dp"
             tools:text="@tools:sample/lorem/random"
             tools:maxLines="2"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
