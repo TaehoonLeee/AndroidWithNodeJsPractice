@@ -13,14 +13,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navController = findNavController(R.id.nav_host_fragment)
-
-        btnGET.setOnClickListener { v ->
-            navController.navigate(R.id.getFragment)
-        }
-
-        btnPOST.setOnClickListener { v ->
-            navController.navigate(R.id.postFragment)
-        }
+//        val navController = findNavController(R.id.nav_host_fragment)
+//
+//        btnGET.setOnClickListener { v ->
+//            navController.navigate(R.id.getFragment)
+//        }
+//
+//        btnPOST.setOnClickListener { v ->
+//            navController.navigate(R.id.postFragment)
+//        }
     }
 }

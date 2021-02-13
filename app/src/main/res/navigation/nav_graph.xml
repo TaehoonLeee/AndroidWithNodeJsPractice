@@ -3,16 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/getFragment">
-
+    app:startDestination="@id/chatFragment">
     <fragment
-        android:id="@+id/getFragment"
-        android:name="com.example.nodejs.UI.GET.GetFragment"
-        android:label="get_fragment"
-        tools:layout="@layout/get_fragment" />
-    <fragment
-        android:id="@+id/postFragment"
-        android:name="com.example.nodejs.UI.POST.PostFragment"
-        android:label="fragment_post"
-        tools:layout="@layout/fragment_post" />
+        android:id="@+id/chatFragment"
+        android:name="com.example.nodejs.UI.chat.ChatFragment"
+        android:label="chat_fragment"
+        tools:layout="@layout/chat_fragment" />
 </navigation>

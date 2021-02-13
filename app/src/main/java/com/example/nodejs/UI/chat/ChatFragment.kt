@@ -1,38 +1,39 @@
-package com.example.nodejs.UI.GET
+package com.example.nodejs.UI.chat
 
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.nodejs.R
-import com.example.nodejs.UI.GET.GetViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.get_fragment.*
+import kotlinx.android.synthetic.main.chat_fragment.*
 
 @AndroidEntryPoint
-class GetFragment : Fragment(R.layout.get_fragment) {
+class ChatFragment : Fragment(R.layout.chat_fragment) {
 
-    private val getViewModel by viewModels<GetViewModel>()
-    private lateinit var getAdapter: GETAdapter
+    private val chatViewModel : ChatViewModel by viewModels<ChatViewModel>()
+    private lateinit var chatAdapter : ChatAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getAdapter = GETAdapter()
-        rvGet.apply {
+        chatAdapter = ChatAdapter()
+
+        rvChat.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = getAdapter
+            adapter = chatAdapter
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        getViewModel.Users.observe(viewLifecycleOwner, Observer {
-            getAdapter.setUsers(it)
+        chatViewModel.messages.observe(viewLifecycleOwner, Observer {
+            chatAdapter.setMessages(it)
         })
     }
 

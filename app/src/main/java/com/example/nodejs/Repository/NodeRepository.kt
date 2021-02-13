@@ -1,6 +1,7 @@
 package com.example.nodejs.Repository
 
 import android.util.Log
+import com.example.nodejs.Model.Messages
 import com.example.nodejs.Model.User
 import com.example.nodejs.Model.Users
 import com.example.nodejs.Network.NodeService
@@ -21,5 +22,10 @@ class NodeRepository @Inject constructor(
 
     fun setData(id : String, password : String) : Call<User> {
         return nodeService.setData(id, password)
+    }
+
+    fun getMessages() : Single<Messages> {
+        return nodeService.getMessages()
+            .subscribeOn(Schedulers.io())
     }
 }
