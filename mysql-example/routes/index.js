@@ -47,29 +47,33 @@ router.get('/chatList/:name', function(req, res, next) {
 		console.log(obj);
 		res.json(obj);
 	});
-});		
+});
+
+router.get('/chatList', function(req, res, next) {
+	var body = req.query.name;
+	let obj = new Object();
+
+	pool.query("SELECT roomName FROM chatRoomJoin WHERE userName <> ? GROUP BY roomName", [body], async function(err, rows, fields) {
+		if(err) { console.log(err); }
+		
+		let arr = [];
+		for(let i = 0; i < rows.length; i++) {
+			let o = new Object();
+			console.log(rows[i]);
+			o.name = rows[i].roomName;
+			
+			var roomName = rows[i].roomName;
+			var query = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName =? GROUP BY roomName";
+			var queryRes = await getResult(query, roomName);
+			o.memberNumber = queryRes[0].memberNumber;
+			arr.push(o);
+		}
+		obj.chatRoomList = arr;
+		console.log(obj);
+		res.json(obj);
+	});
+});
 	
-
-//router.get('/chatList/:name', function(req, res, next) {
-//	var name = req.params.name;
-//	let obj = new Object();
-//	client.query("SELECT a.name FROM chatRoom a, chatRoomJoin b WHERE a.name = b.roomName and b.userName = ?", [name], function(err, rows, fields) {
-//		if(err) {
-//			console.log(err);
-//		}
-//		else {
-//			let arr = [];
-//			for(let i = 0; i < rows.length; i++) {
-//				let o = new Object();
-//				o.name = rows[i].name;
-//				arr.push(o);
-//			}
-//			obj.chatRoomList = arr;
-//			res.json(obj);
-//		}
-//	});
-//});
-
 router.get('/chat/:roomName', function(req, res, next) {
 	var name = req.params.roomName;
 	client.query("SELECT * FROM Message WHERE Message.chatRoomName = ?", [name], function(err, rows, fields) {
