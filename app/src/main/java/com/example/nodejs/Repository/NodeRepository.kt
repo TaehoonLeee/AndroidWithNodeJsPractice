@@ -13,15 +13,6 @@ import javax.inject.Singleton
 class NodeRepository @Inject constructor(
     private val nodeService: NodeService
 ){
-    fun getData() : Single<Users> {
-        return nodeService.getData()
-            .subscribeOn(Schedulers.io())
-    }
-
-    fun setData(id : String, password : String) : Call<User> {
-        return nodeService.setData(id, password)
-    }
-
     fun getMessages(name : String) : Single<Messages> {
         return nodeService.getMessages(name)
             .subscribeOn(Schedulers.io())
@@ -37,5 +28,9 @@ class NodeRepository @Inject constructor(
 
     fun getAllChatList(name : String) : Single<ChatList> {
         return nodeService.getAllChatList(name)
+    }
+
+    fun enterRoom(userName : String, roomName : String) : Call<Res_Message> {
+        return nodeService.enterRoom(userName, roomName)
     }
 }

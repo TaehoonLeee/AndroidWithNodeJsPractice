@@ -9,7 +9,7 @@ import com.example.nodejs.Model.ChatRoom
 import com.example.nodejs.R
 import kotlinx.android.synthetic.main.item_chat_room.view.*
 
-class AllChatRoomAdapter() : RecyclerView.Adapter<AllChatRoomAdapter.AllChatRoomViewHolder>() {
+class AllChatRoomAdapter(val onRoomClick : (ChatRoom) -> Unit) : RecyclerView.Adapter<AllChatRoomAdapter.AllChatRoomViewHolder>() {
 
     private var chatList : List<ChatRoom> = listOf()
 
@@ -36,7 +36,7 @@ class AllChatRoomAdapter() : RecyclerView.Adapter<AllChatRoomAdapter.AllChatRoom
     inner class AllChatRoomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         fun bind(chatRoom : ChatRoom) {
             itemView.setOnClickListener {
-
+                onRoomClick(chatRoom)
             }
             itemView.apply {
                 roomName.text = chatRoom.name

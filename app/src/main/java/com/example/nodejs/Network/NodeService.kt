@@ -30,4 +30,10 @@ interface NodeService {
 
     @GET("/chatList")
     fun getAllChatList(@Query("name") name : String) : Single<ChatList>
+
+    @FormUrlEncoded
+    @POST("/enter")
+    fun enterRoom(
+        @Field("userName") userName : String,
+        @Field("roomName") roomName : String) : Call<Res_Message>
 }
