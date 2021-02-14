@@ -66,6 +66,11 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             chatAdapter.setMessages(it)
         })
 
+
+        chatScrollView.postDelayed ({
+            chatScrollView.fullScroll(View.FOCUS_DOWN)
+        }, 1000)
+
     }
 
 }
