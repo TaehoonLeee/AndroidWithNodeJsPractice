@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.nodejs.Model.Message
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,6 +54,26 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
         }
 
         toolbar.title = roomName
+        focusDownfab.setOnClickListener {
+            focusDown(false)
+        }
+    }
+
+    private fun focusDown(isStart : Boolean) {
+        // 채팅 뷰 하단으로 내리기
+        when(isStart) {
+            true -> {
+                chatScrollView.postDelayed ({
+                    chatScrollView.fullScroll(View.FOCUS_DOWN)
+                }, 1000)
+            }
+            false -> {
+                chatScrollView.post {
+                    chatScrollView.fullScroll(View.FOCUS_DOWN)
+                }
+            }
+        }
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -66,10 +87,18 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             chatAdapter.setMessages(it)
         })
 
+        focusDown(true)
 
-        chatScrollView.postDelayed ({
-            chatScrollView.fullScroll(View.FOCUS_DOWN)
-        }, 1000)
+        chatScrollView.viewTreeObserver.addOnScrollChangedListener {
+            val scrollY = chatScrollView.scrollY
+            Log.e("VIEWTREE", scrollY.toString())
+            if(scrollY < 270) {
+                focusDownfab.show()
+            }
+            else if(scrollY >= 270) {
+                focusDownfab.hide()
+            }
+        }
 
     }
 
