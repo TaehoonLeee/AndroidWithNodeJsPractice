@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.R
@@ -21,7 +22,12 @@ class ChatRoomAddFragment : Fragment(R.layout.chat_room_add_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatRoomAdapter = AllChatRoomAdapter()
+        chatRoomAdapter = AllChatRoomAdapter { chatRoom ->
+            chatRoomAddViewModel.onClickRoom(args.name, chatRoom.name)
+            val direction =
+                ChatRoomAddFragmentDirections.actionChatRoomAddFragmentToChatFragment(args.name, chatRoom.name)
+            findNavController().navigate(direction)
+        }
 
         rvChatRoomList.apply {
             layoutManager = LinearLayoutManager(requireContext())

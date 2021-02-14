@@ -46,5 +46,8 @@
         <argument
             android:name="name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_chatRoomAddFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
 </navigation>
