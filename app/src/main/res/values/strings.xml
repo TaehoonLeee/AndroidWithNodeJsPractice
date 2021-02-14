@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NodeJs</string>
+    <string name="get">GET</string>
+    <string name="post">POST</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="set">SET</string>
+    <string name="chat">Chat</string>
+    <string name="send_message">Send message</string>
+    <string name="send_button">Send Button</string>
+    <string name="topMessage">  최상단  </string>
+</resources>

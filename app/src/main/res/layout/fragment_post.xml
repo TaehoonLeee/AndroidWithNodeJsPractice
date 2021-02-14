@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.POST.PostFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/standard_full">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="ID" />
+
+        <EditText
+            android:id="@+id/editID"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="ID"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/standard_full"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/standard_full">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="PW" />
+
+        <EditText
+            android:id="@+id/editPW"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="PASSWORD"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/standard_full"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:layout_weight="1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/set"/>
+
+</LinearLayout>

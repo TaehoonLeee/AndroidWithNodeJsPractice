@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/bar"
+        android:layout_above="@id/sendLayout"
+        android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:id="@+id/topText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/standard_half"
+                        android:layout_marginBottom="@dimen/standard_half"
+                        android:background="@drawable/oval_button"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:text="@string/topMessage"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:elevation="@dimen/standard_full"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvChat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false" />
+
+                </LinearLayout>
+            </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/sendLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@android:color/transparent" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/cardview_dark_background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/msgToSend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="@string/chat"
+            android:background="@android:color/transparent"
+            android:hint="@string/send_message"
+            android:inputType="text"
+            android:padding="@dimen/standard_half"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/round_button"
+            android:contentDescription="@string/send_button"
+            android:src="@drawable/ic_baseline_arrow_circle_up_24" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/chat"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+</RelativeLayout>
