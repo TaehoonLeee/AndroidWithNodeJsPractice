@@ -34,4 +34,8 @@ class NodeRepository @Inject constructor(
     fun getChatList(name : String) : Single<ChatList> {
         return nodeService.getChatList(name)
     }
+
+    fun getAllChatList(name : String) : Single<ChatList> {
+        return nodeService.getAllChatList(name)
+    }
 }

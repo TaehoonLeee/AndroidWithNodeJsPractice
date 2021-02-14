@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/chatRoomAppbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_blue_dark"
@@ -14,20 +13,29 @@
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/chatRoomToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:menu="@menu/chat_room_menu"
-            app:title="ChatRoom"/>
+            app:title="ChatRoomList"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvChatList"
+        android:id="@+id/rvChatRoomList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_chat_room"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/standard_full"
+        android:elevation="@dimen/standard_full"
+        android:contentDescription="@string/toaddchatrommbutton"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:src="@drawable/ic_baseline_add_24"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

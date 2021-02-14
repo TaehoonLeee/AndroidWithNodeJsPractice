@@ -27,4 +27,7 @@ interface NodeService {
 
     @GET("/chatList/{name}")
     fun getChatList(@Path("name") name : String) : Single<ChatList>
+
+    @GET("/chatList")
+    fun getAllChatList(@Query("name") name : String) : Single<ChatList>
 }
