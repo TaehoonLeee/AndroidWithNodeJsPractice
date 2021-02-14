@@ -1,12 +1,13 @@
 package com.example.nodejs.UI.chatroom
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.R
@@ -29,6 +30,19 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
         rvChatList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = chatRoomAdapter
+        }
+
+        chatRoomToolbar.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.plusBtn -> {
+                    val direction =
+                        ChatRoomFragmentDirections.actionChatRoomFragmentToChatRoomAddFragment(name = args.name)
+                    findNavController().navigate(direction)
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 

@@ -9,4 +9,7 @@
     <string name="send_message">Send message</string>
     <string name="send_button">Send Button</string>
     <string name="topMessage">  최상단  </string>
+    <string name="searchroom">searchRoom</string>
+    <string name="addroom">addRoom</string>
+    <string name="toaddchatrommbutton">ToAddChatRommButton</string>
 </resources>

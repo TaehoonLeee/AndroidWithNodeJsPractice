@@ -51,6 +51,8 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             chatViewModel.addMessage(userName, msgToSend.text.toString(), formatted, roomName)
             msgToSend.text = null
         }
+
+        toolbar.title = roomName
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
