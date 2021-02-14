@@ -109,4 +109,13 @@ router.post('/chat', function(req, res, next) {
 		});
 });
 
+router.post('/enter', function(req, res, next) {
+	var body = req.body;
+
+	client.query("INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)", [body.userName, body.roomName], function(err, rows, fields) {
+		if(err) { console.log(err); }
+		res.send('{"code":1, "msg":"successed"}');
+	});
+});	
+
 module.exports = router;
