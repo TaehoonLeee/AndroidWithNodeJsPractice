@@ -44,6 +44,7 @@ class ChatAdapter(val name : String) : RecyclerView.Adapter<ChatAdapter.ChatView
             itemView.apply {
                 when (itemViewType) {
                     RECEIVER -> {
+                        receiverName.text = message.sender
                         txtReceiverMessage.text = message.message
                         txtReceiverDateTime.text = message.timeStamp
                     }

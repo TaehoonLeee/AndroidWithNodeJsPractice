@@ -27,7 +27,11 @@ class NodeRepository @Inject constructor(
             .subscribeOn(Schedulers.io())
     }
 
-    fun addMessage(sender : String, message : String, timeStamp : String) : Call<Res_Message> {
-        return nodeService.addMessage(sender, message, timeStamp)
+    fun addMessage(sender : String, message : String, timeStamp : String, roomName : String) : Call<Res_Message> {
+        return nodeService.addMessage(sender, message, timeStamp, roomName)
+    }
+
+    fun getChatList(name : String) : Single<ChatList> {
+        return nodeService.getChatList(name)
     }
 }

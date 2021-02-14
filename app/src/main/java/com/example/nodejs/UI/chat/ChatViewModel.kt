@@ -23,11 +23,11 @@ class ChatViewModel @ViewModelInject constructor(
     private val _messages = MutableLiveData<List<Message>>()
     val messages : LiveData<List<Message>> = _messages
 
-    private var name : String = savedStateHandle.get<String>("name")!!
+    private var roomName : String = savedStateHandle.get<String>("roomName")!!
 
     init {
         Log.e("ViewModel", "Init")
-        onGetMessages(name)
+        onGetMessages(roomName)
     }
 
     private fun onGetMessages(name : String) {
@@ -37,15 +37,15 @@ class ChatViewModel @ViewModelInject constructor(
             .subscribe{ messages -> _messages.value = messages.messages }
     }
 
-    fun addMessage(sender : String, message : String, timeStamp : String) {
-        nodeRepository.addMessage(sender, message, timeStamp).enqueue(object : Callback<Res_Message> {
+    fun addMessage(sender : String, message : String, timeStamp : String, roomName : String) {
+        nodeRepository.addMessage(sender, message, timeStamp, roomName).enqueue(object : Callback<Res_Message> {
             override fun onFailure(call: Call<Res_Message>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
             override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {
                 if (response.isSuccessful) {
-                    onGetMessages(name)
+                    onGetMessages(roomName)
                 }
             }
         })

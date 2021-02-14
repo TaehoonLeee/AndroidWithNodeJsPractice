@@ -15,12 +15,16 @@ interface NodeService {
     fun setData(@Field("id") id : String,
                 @Field("password") password : String) : Call<User>
 
-    @GET("messages/{name}")
+    @GET("chat/{name}")
     fun getMessages(@Path("name") name : String) : Single<Messages>
 
     @FormUrlEncoded
-    @POST("messages")
+    @POST("chat")
     fun addMessage(@Field("sender") sender : String,
                    @Field("message") message : String,
-                   @Field("timeStamp") timeStamp : String) : Call<Res_Message>
+                   @Field("timeStamp") timeStamp : String,
+                    @Field("roomName") roomName : String) : Call<Res_Message>
+
+    @GET("/chatList/{name}")
+    fun getChatList(@Path("name") name : String) : Single<ChatList>
 }

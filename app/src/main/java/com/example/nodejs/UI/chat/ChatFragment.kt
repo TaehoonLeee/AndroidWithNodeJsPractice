@@ -33,9 +33,10 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val name = args.name
+        val userName = args.userName
+        val roomName = args.roomName
 
-        chatAdapter = ChatAdapter(name)
+        chatAdapter = ChatAdapter(userName)
 
         rvChat.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -47,7 +48,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             val formatter = DateTimeFormatter.ofPattern("h:mm a")
             val formatted = currentTime.format(formatter)
 
-            chatViewModel.addMessage(name, msgToSend.text.toString(), formatted)
+            chatViewModel.addMessage(userName, msgToSend.text.toString(), formatted, roomName)
             msgToSend.text = null
         }
     }

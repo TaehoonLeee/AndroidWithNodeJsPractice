@@ -18,7 +18,7 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
         Login.setOnClickListener {
             val name = editName.text.toString()
             val direction =
-                    EntryFragmentDirections.actionEntryFragmentToChatFragment(name)
+                    EntryFragmentDirections.actionEntryFragmentToChatRoomFragment(name)
             view.findNavController().navigate(direction)
         }
     }
