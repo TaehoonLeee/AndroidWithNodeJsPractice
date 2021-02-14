@@ -57,6 +57,10 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
         super.onActivityCreated(savedInstanceState)
 
         chatViewModel.messages.observe(viewLifecycleOwner, Observer {
+            if(it.isEmpty()) {
+                topText.visibility = View.GONE
+            }
+
             chatAdapter.setMessages(it)
         })
 

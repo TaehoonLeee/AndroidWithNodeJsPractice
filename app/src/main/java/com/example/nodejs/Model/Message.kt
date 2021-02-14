@@ -37,5 +37,6 @@ data class ChatList(
 
 @JsonClass(generateAdapter = true)
 data class ChatRoom(
-        val name : String
+        val name : String,
+        val memberNumber : Int
 )

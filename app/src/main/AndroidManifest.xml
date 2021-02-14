@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme2">
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustUnspecified">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

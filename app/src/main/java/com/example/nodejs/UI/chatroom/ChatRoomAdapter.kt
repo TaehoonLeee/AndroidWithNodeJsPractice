@@ -43,7 +43,7 @@ class ChatRoomAdapter(val userName : String) : RecyclerView.Adapter<ChatRoomAdap
             }
             itemView.apply {
                 roomName.text = chatRoom.name
-                memberNumber.text = "2"
+                memberNumber.text = chatRoom.memberNumber.toString()
             }
         }
     }
