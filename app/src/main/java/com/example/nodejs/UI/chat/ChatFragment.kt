@@ -88,18 +88,24 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
         })
 
         focusDown(true)
-
         chatScrollView?.viewTreeObserver?.addOnScrollChangedListener {
-            val scrollY = chatScrollView.scrollY
-            Log.e("VIEWTREE", scrollY.toString())
-            if(scrollY < 270) {
-                focusDownfab.show()
-            }
-            else if(scrollY >= 270) {
-                focusDownfab.hide()
+            if (chatScrollView != null) {
+                val scrollY = chatScrollView.scrollY
+                Log.e("VIEWTREE", scrollY.toString())
+                val totalHeight = chatScrollView.getChildAt(0).height - chatScrollView.height
+                if (totalHeight - scrollY > 200) {
+                    focusDownfab.show()
+                }
+                else {
+                    focusDownfab.hide()
+                }
+//                if (scrollY < 270 && scrollY != 0) {
+//                    focusDownfab.show()
+//                } else if (scrollY >= 270) {
+//                    focusDownfab.hide()
+//                }
             }
         }
-
     }
 
 }
