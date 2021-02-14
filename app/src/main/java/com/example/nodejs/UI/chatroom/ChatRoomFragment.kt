@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat_room.*
+import kotlinx.android.synthetic.main.search_layout.*
 
 @AndroidEntryPoint
 class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
@@ -31,6 +33,23 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = chatRoomAdapter
         }
+
+        searchView.maxWidth = Int.MAX_VALUE
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(!newText.isNullOrEmpty()) {
+                    chatRoomAdapter.setChatList(chatRoomViewModel.chatList.value!!)
+                    chatRoomAdapter.onSearchList(newText)
+                }
+
+                return false
+            }
+        })
 
         chatRoomToolbar.setOnMenuItemClickListener {
             when(it.itemId) {

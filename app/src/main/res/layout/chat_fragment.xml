@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
+        android:id="@+id/chatScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/bar"
@@ -105,5 +106,21 @@
             android:layout_height="wrap_content"
             app:title="@string/chat"/>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/focusDownfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/standard_full"
+        android:elevation="@dimen/standard_full"
+        android:layout_above="@id/sendLayout"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
+        android:visibility="gone"
+        android:contentDescription="@string/focusdown"
+        app:fabSize="mini"
+        app:tint="@color/white"/>
 
 </RelativeLayout>
