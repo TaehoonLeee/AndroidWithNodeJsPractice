@@ -89,7 +89,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
 
         focusDown(true)
 
-        chatScrollView.viewTreeObserver.addOnScrollChangedListener {
+        chatScrollView?.viewTreeObserver?.addOnScrollChangedListener {
             val scrollY = chatScrollView.scrollY
             Log.e("VIEWTREE", scrollY.toString())
             if(scrollY < 270) {

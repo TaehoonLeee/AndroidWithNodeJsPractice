@@ -6,7 +6,9 @@
         android:id="@+id/searchBtn"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/searchroom"
-        app:showAsAction="always"/>
+        android:iconTint="@color/white"
+        app:showAsAction="always"
+        app:actionLayout="@layout/search_layout" />
 
     <item
         android:id="@+id/plusBtn"

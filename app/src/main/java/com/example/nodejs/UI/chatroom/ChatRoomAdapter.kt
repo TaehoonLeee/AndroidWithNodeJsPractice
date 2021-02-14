@@ -33,6 +33,17 @@ class ChatRoomAdapter(val userName : String) : RecyclerView.Adapter<ChatRoomAdap
         notifyDataSetChanged()
     }
 
+    fun onSearchList(query : String) {
+        val tmpList : MutableList<ChatRoom> = mutableListOf()
+        repeat(chatList.size) {
+            if(chatList[it].name.contains(query)) {
+                tmpList.add(chatList[it])
+            }
+        }
+        this.chatList = tmpList
+        notifyDataSetChanged()
+    }
+
 
     inner class ChatRoomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         fun bind(chatRoom : ChatRoom) {
