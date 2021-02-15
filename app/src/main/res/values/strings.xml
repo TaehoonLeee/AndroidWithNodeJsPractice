@@ -13,4 +13,6 @@
     <string name="addroom">addRoom</string>
     <string name="toaddchatrommbutton">ToAddChatRommButton</string>
     <string name="focusdown">FocusDown</string>
+    <string name="room_name">Room name</string>
+    <string name="create">Create</string>
 </resources>

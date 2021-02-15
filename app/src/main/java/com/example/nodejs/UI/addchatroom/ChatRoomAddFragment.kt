@@ -33,6 +33,12 @@ class ChatRoomAddFragment : Fragment(R.layout.chat_room_add_fragment) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = chatRoomAdapter
         }
+
+        addFB.setOnClickListener {
+            val direction =
+                    ChatRoomAddFragmentDirections.actionChatRoomAddFragmentToCreateChatRoomFragment(args.name)
+            findNavController().navigate(direction)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -33,4 +33,8 @@ class NodeRepository @Inject constructor(
     fun enterRoom(userName : String, roomName : String) : Call<Res_Message> {
         return nodeService.enterRoom(userName, roomName)
     }
+
+    fun createRoom(userName : String, roomName : String) : Call<Res_Message> {
+        return nodeService.createRoom(userName, roomName)
+    }
 }

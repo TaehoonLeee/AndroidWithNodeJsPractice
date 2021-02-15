@@ -36,4 +36,10 @@ interface NodeService {
     fun enterRoom(
         @Field("userName") userName : String,
         @Field("roomName") roomName : String) : Call<Res_Message>
+
+    @FormUrlEncoded
+    @POST("/createroom")
+    fun createRoom(
+            @Field("userName") userName : String,
+            @Field("roomName") roomName : String) : Call<Res_Message>
 }
