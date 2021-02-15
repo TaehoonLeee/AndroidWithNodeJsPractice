@@ -1,26 +1,16 @@
 package com.example.nodejs.UI.chat
 
-import android.app.Activity
-import android.inputmethodservice.InputMethodService
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.nodejs.Model.Message
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
-import io.socket.client.IO
-import io.socket.client.Socket
-import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.chat_fragment.*
-import org.json.JSONArray
-import org.json.JSONObject
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -49,7 +39,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             val formatter = DateTimeFormatter.ofPattern("h:mm a")
             val formatted = currentTime.format(formatter)
 
-            chatViewModel.addMessage(userName, msgToSend.text.toString(), formatted, roomName)
+            chatViewModel.addMessage(userName, msgToSend.text.toString(), formatted, roomName, chatScrollView)
             msgToSend.text = null
         }
 
@@ -99,11 +89,6 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
                 else {
                     focusDownfab.hide()
                 }
-//                if (scrollY < 270 && scrollY != 0) {
-//                    focusDownfab.show()
-//                } else if (scrollY >= 270) {
-//                    focusDownfab.hide()
-//                }
             }
         }
     }

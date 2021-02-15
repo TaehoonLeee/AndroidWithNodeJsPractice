@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.chat_fragment.*
 import kotlinx.android.synthetic.main.fragment_chat_room.*
 import kotlinx.android.synthetic.main.search_layout.*
 
@@ -45,6 +47,9 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
                 if(!newText.isNullOrEmpty()) {
                     chatRoomAdapter.setChatList(chatRoomViewModel.chatList.value!!)
                     chatRoomAdapter.onSearchList(newText)
+                }
+                else {
+                    chatRoomAdapter.setChatList(chatRoomViewModel.chatList.value!!)
                 }
 
                 return false
