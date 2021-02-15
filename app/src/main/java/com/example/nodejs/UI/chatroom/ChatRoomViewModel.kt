@@ -25,7 +25,7 @@ class ChatRoomViewModel @ViewModelInject constructor(
         onGetChatList(name)
     }
 
-    private fun onGetChatList(name: String) {
+    fun onGetChatList(name: String) {
         nodeRepository.getChatList(name)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { chatList -> _chatList.value = chatList.chatRoomList }

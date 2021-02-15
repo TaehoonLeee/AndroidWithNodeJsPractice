@@ -37,7 +37,8 @@
             app:argType="string" />
         <action
             android:id="@+id/action_chatRoomFragment_to_chatRoomAddFragment"
-            app:destination="@id/chatRoomAddFragment" />
+            app:destination="@id/chatRoomAddFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/chatRoomAddFragment"
@@ -48,10 +49,13 @@
             app:argType="string" />
         <action
             android:id="@+id/action_chatRoomAddFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/chatRoomFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_chatRoomAddFragment_to_createChatRoomFragment"
-            app:destination="@id/createChatRoomFragment" />
+            app:destination="@id/createChatRoomFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <dialog
         android:id="@+id/createChatRoomFragment"
@@ -63,6 +67,8 @@
             app:argType="string" />
         <action
             android:id="@+id/action_createChatRoomFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/chatRoomFragment"
+            app:popUpToInclusive="false" />
     </dialog>
 </navigation>

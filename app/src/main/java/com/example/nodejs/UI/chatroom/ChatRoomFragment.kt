@@ -77,4 +77,9 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
             chatRoomAdapter.setChatList(it)
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+        chatRoomViewModel.onGetChatList(args.name)
+    }
 }

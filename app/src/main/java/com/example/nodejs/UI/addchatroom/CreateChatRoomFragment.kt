@@ -27,7 +27,6 @@ class CreateChatRoomFragment : BottomSheetDialogFragment() {
         super.onActivityCreated(savedInstanceState)
         createBtn.setOnClickListener {
             val roomName = createRoomEdit.text.toString()
-//            Toast.makeText(requireContext(), roomName, Toast.LENGTH_LONG).show()
             createChatRoomViewModel.createRoom(roomName, findNavController())
         }
     }

@@ -27,7 +27,6 @@ class CreateChatRoomViewModel @ViewModelInject constructor(
                 if (response.isSuccessful){
                     val direction =
                             CreateChatRoomFragmentDirections.actionCreateChatRoomFragmentToChatFragment(userName, roomName)
-                    Log.e("Create Room", direction.toString())
                     navController.navigate(direction)
                 }
             }
