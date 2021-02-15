@@ -116,6 +116,19 @@ router.post('/enter', function(req, res, next) {
 		if(err) { console.log(err); }
 		res.send('{"code":1, "msg":"successed"}');
 	});
+});
+
+router.post('/createroom', function(req, res, next) {
+	var body = req.body;
+
+	client.query("INSERT INTO chatRoom(name) VALUES(?)", [body.roomName], function(err, rows, fields) {
+		if(err) { console.log("chatroom" + err); }
+	});
+
+	client.query("INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)", [body.userName, body.roomName], function(err, rows, fields) {
+		if(err) { console.log("chatroomjoin" + err); }	
+	});
+	res.send('{"code":1, "msg":"successed"}');
 });	
 
 module.exports = router;
