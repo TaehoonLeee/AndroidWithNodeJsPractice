@@ -92,6 +92,7 @@
         android:label="SignUpFragment" >
         <action
             android:id="@+id/action_signUpFragment_to_chatRoomFragment"
-            app:destination="@id/chatRoomFragment" />
+            app:destination="@id/chatRoomFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

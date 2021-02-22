@@ -18,9 +18,21 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
 
         Login.setOnClickListener {
             val name = editEmail.text.toString()
-            val direction =
-                EntryFragmentDirections.actionEntryFragmentToChatRoomFragment(name)
-            findNavController().navigate(direction)
+            val password = editPassword.text.toString()
+
+            Amplify.Auth.signIn(
+                name,
+                password,
+                { result ->
+                    Log.e("Sign IN", if(result.isSignInComplete) "Sign In complete" else "Not Complete")
+                    if(result.isSignInComplete) {
+                        val direction =
+                            EntryFragmentDirections.actionEntryFragmentToChatRoomFragment(name)
+                        findNavController().navigate(direction)
+                    }
+                },
+                { error -> Log.e("Sign In", "Error ${error.message}")}
+            )
         }
 
         signup.setOnClickListener {
