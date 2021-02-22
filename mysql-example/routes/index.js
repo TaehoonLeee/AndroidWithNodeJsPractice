@@ -53,7 +53,7 @@ router.get('/chatList', function(req, res, next) {
 	var body = req.query.name;
 	let obj = new Object();
 
-	pool.query("SELECT roomName FROM chatRoomJoin WHERE roomName NOT IN (SELECT roomName FROM chatRoomJoin WHERE userName = ?)", [body], async function(err, rows, fields) {
+	pool.query("SELECT roomName FROM chatRoomJoin WHERE roomName NOT IN (SELECT roomName FROM chatRoomJoin WHERE userName = ?) GROUP BY roomName", [body], async function(err, rows, fields) {
 		if(err) { console.log(err); }
 		
 		let arr = [];
@@ -147,6 +147,14 @@ router.get('/chatmember/:roomName', function(req, res, next) {
 			console.log(arr);
 			res.json(obj);
 		}
+	});
+});
+
+router.post('/createmember', function(req, res, next) {
+	var body = req.body;
+
+	client.query("INSERT INTO Person VALUES(?)", [body.userName], function(err, rows, fields) {
+		if(err) { console.log(err); }
 	});
 });
 
