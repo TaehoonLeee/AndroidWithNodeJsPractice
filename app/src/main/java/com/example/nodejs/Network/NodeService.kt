@@ -37,4 +37,8 @@ interface NodeService {
 
     @GET("/chatmember/{roomName}")
     fun getChatMembers(@Path("roomName") roomName : String) : Single<Members>
+
+    @FormUrlEncoded
+    @POST("/createmember")
+    fun createMember(@Field("userName") userName : String) : Call<Res_Message>
 }
