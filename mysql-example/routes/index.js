@@ -129,6 +129,25 @@ router.post('/createroom', function(req, res, next) {
 		if(err) { console.log("chatroomjoin" + err); }	
 	});
 	res.send('{"code":1, "msg":"successed"}');
-});	
+});
+
+router.get('/chatmember/:roomName', function(req, res, next) {
+	var name = req.params.roomName;
+	client.query("SELECT userName FROM chatRoomJoin WHERE roomName = ?", [name], function(err, rows, fields) {
+		if(err) { console.log(err); }
+		else {
+			let obj = new Object();
+			let arr = [];
+			for(let i = 0; i < rows.length; i++) {
+				let o = new Object();
+				o.name = rows[i].userName;
+				arr.push(o);
+			}
+			obj.members = arr;
+			console.log(arr);
+			res.json(obj);
+		}
+	});
+});
 
 module.exports = router;
