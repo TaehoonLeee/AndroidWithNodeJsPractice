@@ -17,4 +17,17 @@
     <string name="create">Create</string>
     <string name="member_information">Member information</string>
     <string name="members">Members</string>
+    <string name="sign_up"><u>Sign up</u></string>
+    <string name="find"><u>Find</u></string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="cancel"><u>Cancel</u></string>
+    <string name="title_activity_entry">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

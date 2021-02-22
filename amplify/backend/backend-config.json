@@ -1,0 +1,12 @@
+{
+  "auth": {
+    "nodejs0769bb19": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "function": {},
+  "api": {}
+}

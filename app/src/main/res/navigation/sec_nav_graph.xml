@@ -7,12 +7,15 @@
 
     <fragment
         android:id="@+id/entryFragment"
-        android:name="com.example.nodejs.UI.EntryFragment"
+        android:name="com.example.nodejs.UI.entry.EntryFragment"
         android:label="fragment_entry"
         tools:layout="@layout/fragment_entry" >
         <action
             android:id="@+id/action_entryFragment_to_chatRoomFragment"
             app:destination="@id/chatRoomFragment" />
+        <action
+            android:id="@+id/action_entryFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -83,4 +86,12 @@
             android:name="roomName"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.nodejs.UI.entry.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+    </fragment>
 </navigation>

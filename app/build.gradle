@@ -29,6 +29,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        // Support for Java 8 features
+        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -45,11 +47,16 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.wear:wear:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.3'
+    implementation 'androidx.navigation:navigation-ui:2.3.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'com.google.android.material:material:1.3.0'
+    compileOnly 'com.google.android.wearable:wearable:2.6.0'
 
     // navigation setting
     def nav_version = "2.3.2"
@@ -85,5 +92,14 @@ dependencies {
     implementation ('io.socket:socket.io-client:1.0.0') {
         exclude group : 'org.json', module : 'json'
     }
+
+    // Amplify core dependency
+    implementation 'com.amplifyframework:core:1.16.13'
+
+    // Support for Java 8 features
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
+
+    // AWS Amplify Authentication
+    implementation 'com.amplifyframework:aws-auth-cognito:1.16.13'
 
 }

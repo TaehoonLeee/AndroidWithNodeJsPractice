@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.EntryFragment">
+    tools:context=".UI.entry.EntryFragment">
 
 
     <LinearLayout
@@ -12,30 +12,119 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_chat_bubble_outline_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/standard_full"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
+                android:text="Email"
+                android:typeface="monospace"
+                android:textSize="15sp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginEnd="@dimen/standard_half"/>
 
             <EditText
-                android:id="@+id/editName"
+                android:id="@+id/editEmail"
                 tools:text="@tools:sample/full_names"
+                android:background="@drawable/edit_round"
+                android:paddingTop="@dimen/standard_quarter"
+                android:paddingBottom="@dimen/standard_quarter"
+                android:paddingEnd="@dimen/standard_half"
+                android:paddingStart="@dimen/standard_half"
+                android:minWidth="200sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-        <Button
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/standard_full"
+            android:layout_marginTop="@dimen/standard_full"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:typeface="monospace"
+                android:textSize="15sp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_marginEnd="@dimen/standard_half"/>
+
+            <EditText
+                android:id="@+id/editPassword"
+                tools:text="@tools:sample/full_names"
+                android:background="@drawable/edit_round"
+                android:paddingTop="@dimen/standard_quarter"
+                android:paddingBottom="@dimen/standard_quarter"
+                android:paddingEnd="@dimen/standard_half"
+                android:paddingStart="@dimen/standard_half"
+                android:minWidth="200sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@color/cardview_dark_background"
+            android:backgroundTint="@android:color/holo_blue_dark"
             android:text="입장"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/standard_full"
+            android:weightSum="10"
+            android:gravity="center">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"/>
+
+            <TextView
+                android:id="@+id/signup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up"
+                android:layout_weight="2"
+                android:typeface="monospace"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/find"
+                android:layout_weight="2"
+                android:typeface="monospace"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"/>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 </FrameLayout>
