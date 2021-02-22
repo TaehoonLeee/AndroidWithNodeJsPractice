@@ -1,5 +1,6 @@
 package com.example.nodejs.UI.addchatroom
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
@@ -37,7 +38,7 @@ class ChatRoomAddViewModel @ViewModelInject constructor(
     fun onClickRoom(userName : String, roomName : String) {
         nodeRepository.enterRoom(userName, roomName).enqueue(object : Callback<Res_Message> {
             override fun onFailure(call: Call<Res_Message>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("ChatRoomAddViewModel", t.message!!)
             }
 
             override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {

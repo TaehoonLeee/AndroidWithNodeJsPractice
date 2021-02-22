@@ -100,10 +100,11 @@
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/chatToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/chat"/>
+            app:title="@string/chat"
+            app:menu="@menu/chat_menu"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

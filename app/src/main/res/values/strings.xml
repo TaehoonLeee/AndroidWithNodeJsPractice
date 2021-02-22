@@ -15,4 +15,6 @@
     <string name="focusdown">FocusDown</string>
     <string name="room_name">Room name</string>
     <string name="create">Create</string>
+    <string name="member_information">Member information</string>
+    <string name="members">Members</string>
 </resources>

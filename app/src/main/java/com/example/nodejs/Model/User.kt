@@ -3,14 +3,11 @@ package com.example.nodejs.Model
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Users(
-    val resultCode : Int,
-    val msg : String,
-    val users : List<User>
+data class Members(
+    val members : List<Member>
 )
 
 @JsonClass(generateAdapter = true)
-data class User(
-    val id : String,
-    val password : String
+data class Member(
+    val name : String
 )

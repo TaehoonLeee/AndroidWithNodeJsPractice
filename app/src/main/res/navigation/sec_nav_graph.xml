@@ -24,6 +24,9 @@
         <argument
             android:name="roomName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_chatFragment_to_memberInfoFragment"
+            app:destination="@id/memberInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatRoomFragment"
@@ -70,5 +73,14 @@
             app:destination="@id/chatFragment"
             app:popUpTo="@id/chatRoomFragment"
             app:popUpToInclusive="false" />
+    </dialog>
+    <dialog
+        android:id="@+id/memberInfoFragment"
+        android:name="com.example.nodejs.UI.chat.MemberInfoFragment"
+        android:label="fragment_member_info"
+        tools:layout="@layout/fragment_member_info" >
+        <argument
+            android:name="roomName"
+            app:argType="string" />
     </dialog>
 </navigation>

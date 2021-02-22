@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.R
@@ -43,9 +44,22 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             msgToSend.text = null
         }
 
-        toolbar.title = roomName
+        chatToolbar.title = roomName
         focusDownfab.setOnClickListener {
             focusDown(false)
+        }
+
+        chatToolbar.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.infoBtn -> {
+                    val direction =
+                        ChatFragmentDirections.actionChatFragmentToMemberInfoFragment(roomName)
+                    findNavController().navigate(direction)
+
+                    true
+                }
+                else -> false
+            }
         }
     }
 
@@ -92,7 +106,6 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             }
         }
     }
-
 }
 
 

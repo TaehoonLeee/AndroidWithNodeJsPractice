@@ -20,7 +20,7 @@ class CreateChatRoomViewModel @ViewModelInject constructor(
     fun createRoom(roomName : String, navController: NavController) {
         nodeRepository.createRoom(userName!!, roomName).enqueue(object : Callback<Res_Message> {
             override fun onFailure(call: Call<Res_Message>, t: Throwable) {
-
+                Log.e("CreateChatRoomViewModel", t.message!!)
             }
 
             override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {

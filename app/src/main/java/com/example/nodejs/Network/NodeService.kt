@@ -7,14 +7,6 @@ import retrofit2.http.*
 
 interface NodeService {
 
-    @GET("create")
-    fun getData() : Single<Users>
-
-    @FormUrlEncoded
-    @POST("create")
-    fun setData(@Field("id") id : String,
-                @Field("password") password : String) : Call<User>
-
     @GET("chat/{name}")
     fun getMessages(@Path("name") name : String) : Single<Messages>
 
@@ -42,4 +34,7 @@ interface NodeService {
     fun createRoom(
             @Field("userName") userName : String,
             @Field("roomName") roomName : String) : Call<Res_Message>
+
+    @GET("/chatmember/{roomName}")
+    fun getChatMembers(@Path("roomName") roomName : String) : Single<Members>
 }
