@@ -176,6 +176,26 @@ router.get('/friends/:userName', function(req, res, next) {
 		}
 	});
 });
-	
+
+router.get('/friendcandidate', function(req, res, next) {
+	var name = req.query.userName;
+	var regex = req.query.regex;
+	client.query("SELECT name FROM Person WHERE name LIKE ? AND name NOT IN (SELECT friend FROM Relationship WHERE me = ?) AND name <> ?", [regex, name, name], function(err, rows, fields) {
+		if(err) { console.log(err); }
+		else {
+			let obj = new Object();
+			let arr = [];
+			for(let i = 0; i < rows.length; i++) {
+				let o = new Object();
+				o.name = rows[i].name;
+				arr.push(o);
+			}
+			obj.friends = arr;
+			console.log(arr);
+			res.json(obj);
+		}
+	});
+});
+		
 
 module.exports = router;
