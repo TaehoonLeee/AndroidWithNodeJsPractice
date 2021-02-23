@@ -9,8 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nodejs.MainActivity
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_fragment.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -105,6 +107,8 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
                 }
             }
         }
+
+        (activity as MainActivity).isShowBar(false)
     }
 }
 

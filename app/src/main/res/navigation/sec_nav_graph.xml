@@ -11,11 +11,11 @@
         android:label="fragment_entry"
         tools:layout="@layout/fragment_entry" >
         <action
-            android:id="@+id/action_entryFragment_to_chatRoomFragment"
-            app:destination="@id/chatRoomFragment" />
-        <action
             android:id="@+id/action_entryFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_entryFragment_to_profileFragment2"
+            app:destination="@id/profileFragment2" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -45,6 +45,9 @@
             android:id="@+id/action_chatRoomFragment_to_chatRoomAddFragment"
             app:destination="@id/chatRoomAddFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatRoomAddFragment"
@@ -91,8 +94,29 @@
         android:name="com.example.nodejs.UI.entry.SignUpFragment"
         android:label="SignUpFragment" >
         <action
-            android:id="@+id/action_signUpFragment_to_chatRoomFragment"
-            app:destination="@id/chatRoomFragment"
+            android:id="@+id/action_signUpFragment_to_profileFragment2"
+            app:destination="@id/profileFragment2"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment2"
+        android:name="com.example.nodejs.UI.friend.FriendsFragment"
+        android:label="friends_fragment"
+        tools:layout="@layout/friends_fragment" >
+        <action
+            android:id="@+id/action_profileFragment2_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.nodejs.UI.setting.SettingFragment"
+        android:label="setting_fragment"
+        tools:layout="@layout/setting_fragment" >
+        <argument
+            android:name="name"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.amplifyframework.core.Amplify
+import com.example.nodejs.MainActivity
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_entry.*
@@ -27,7 +29,8 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
                     Log.e("Sign IN", if(result.isSignInComplete) "Sign In complete" else "Not Complete")
                     if(result.isSignInComplete) {
                         val direction =
-                            EntryFragmentDirections.actionEntryFragmentToChatRoomFragment(name)
+                            EntryFragmentDirections.actionEntryFragmentToProfileFragment2(name)
+                        (activity as MainActivity).setUserName(name)
                         findNavController().navigate(direction)
                     }
                 },

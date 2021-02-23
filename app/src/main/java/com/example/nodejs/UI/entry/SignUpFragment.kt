@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.core.Amplify
+import com.example.nodejs.MainActivity
 import com.example.nodejs.R
 import com.example.nodejs.Repository.NodeRepository
 import com.example.nodejs.Repository.NodeRepository_Factory
@@ -47,7 +49,8 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 if(result.isSignUpComplete) {
                     signUpViewModel.onCreateMember(id)
                     val direction =
-                        SignUpFragmentDirections.actionSignUpFragmentToChatRoomFragment(id)
+                        SignUpFragmentDirections.actionSignUpFragmentToProfileFragment2(id)
+                    (activity as MainActivity).setUserName(id)
                     findNavController().navigate(direction)
                 }
             },
