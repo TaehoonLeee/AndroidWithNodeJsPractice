@@ -12,8 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nodejs.MainActivity
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_fragment.*
 import kotlinx.android.synthetic.main.fragment_chat_room.*
 import kotlinx.android.synthetic.main.search_layout.*
@@ -23,13 +25,21 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
 
     private val chatRoomViewModel : ChatRoomViewModel by viewModels()
     private lateinit var chatRoomAdapter : ChatRoomAdapter
-    private val args: ChatRoomFragmentArgs by navArgs()
+    private lateinit var userName : String
+
+//    private val args: ChatRoomFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        userName = (activity as MainActivity).getUserName()
+        chatRoomViewModel.onGetChatList(userName)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val name = args.name
-        chatRoomAdapter = ChatRoomAdapter(name)
+        chatRoomAdapter = ChatRoomAdapter(userName)
 
         rvChatList.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -60,7 +70,7 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
             when(it.itemId) {
                 R.id.plusBtn -> {
                     val direction =
-                        ChatRoomFragmentDirections.actionChatRoomFragmentToChatRoomAddFragment(name = args.name)
+                        ChatRoomFragmentDirections.actionChatRoomFragmentToChatRoomAddFragment(name = userName)
                     findNavController().navigate(direction)
                     true
                 }
@@ -76,10 +86,12 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
         chatRoomViewModel.chatList.observe(viewLifecycleOwner, Observer {
             chatRoomAdapter.setChatList(it)
         })
+
+        (activity as MainActivity).isShowBar(true)
     }
 
     override fun onResume() {
         super.onResume()
-        chatRoomViewModel.onGetChatList(args.name)
+        chatRoomViewModel.onGetChatList(userName)
     }
 }

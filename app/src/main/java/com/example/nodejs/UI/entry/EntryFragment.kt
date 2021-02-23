@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.amplifyframework.core.Amplify
 import com.example.nodejs.R
@@ -26,9 +27,10 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
                 { result ->
                     Log.e("Sign IN", if(result.isSignInComplete) "Sign In complete" else "Not Complete")
                     if(result.isSignInComplete) {
-                        val direction =
-                            EntryFragmentDirections.actionEntryFragmentToChatRoomFragment(name)
-                        findNavController().navigate(direction)
+//                        val direction =
+//                            EntryFragmentDirections.actionEntryFragmentToProfileFragment2(name)
+                        val bundle = bundleOf("name" to name)
+                        findNavController().navigate(R.id.profileFragment2, bundle)
                     }
                 },
                 { error -> Log.e("Sign In", "Error ${error.message}")}

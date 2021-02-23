@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amplifyframework.auth.AuthUserAttributeKey
@@ -46,9 +47,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 Log.e("Confirm Sign Up", if (result.isSignUpComplete) "Confirm signUp Success" else "Not Complete")
                 if(result.isSignUpComplete) {
                     signUpViewModel.onCreateMember(id)
-                    val direction =
-                        SignUpFragmentDirections.actionSignUpFragmentToChatRoomFragment(id)
-                    findNavController().navigate(direction)
+//                    val direction =
+//                        SignUpFragmentDirections.actionSignUpFragmentToProfileFragment2(id)
+                    val bundle = bundleOf("name" to id)
+                    findNavController().navigate(R.id.profileFragment2, bundle)
                 }
             },
             { error -> Log.e("Confirm Error", error.message!!) }

@@ -19,11 +19,11 @@ class ChatRoomViewModel @ViewModelInject constructor(
     private val _chatList : MutableLiveData<List<ChatRoom>> = MutableLiveData()
     val chatList : LiveData<List<ChatRoom>> = _chatList
 
-    private val name = savedStateHandle.get<String>("name")!!
-
-    init {
-        onGetChatList(name)
-    }
+//    private val name = savedStateHandle.get<String>("name")!!
+//
+//    init {
+//        onGetChatList(name)
+//    }
 
     fun onGetChatList(name: String) {
         nodeRepository.getChatList(name)
