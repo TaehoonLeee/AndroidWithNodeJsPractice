@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.core.Amplify
+import com.example.nodejs.MainActivity
 import com.example.nodejs.R
 import com.example.nodejs.Repository.NodeRepository
 import com.example.nodejs.Repository.NodeRepository_Factory
@@ -47,10 +48,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 Log.e("Confirm Sign Up", if (result.isSignUpComplete) "Confirm signUp Success" else "Not Complete")
                 if(result.isSignUpComplete) {
                     signUpViewModel.onCreateMember(id)
-//                    val direction =
-//                        SignUpFragmentDirections.actionSignUpFragmentToProfileFragment2(id)
-                    val bundle = bundleOf("name" to id)
-                    findNavController().navigate(R.id.profileFragment2, bundle)
+                    val direction =
+                        SignUpFragmentDirections.actionSignUpFragmentToProfileFragment2(id)
+                    (activity as MainActivity).setUserName(id)
+                    findNavController().navigate(direction)
                 }
             },
             { error -> Log.e("Confirm Error", error.message!!) }

@@ -41,4 +41,7 @@ interface NodeService {
     @FormUrlEncoded
     @POST("/createmember")
     fun createMember(@Field("userName") userName : String) : Call<Res_Message>
+
+    @GET("/friends/{userName}")
+    fun getFriends(@Path("userName") userName : String) : Single<Friends>
 }

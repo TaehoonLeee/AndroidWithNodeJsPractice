@@ -45,4 +45,8 @@ class NodeRepository @Inject constructor(
     fun createMember(userName : String) : Call<Res_Message> {
         return nodeService.createMember(userName)
     }
+
+    fun getFriends(userName : String) : Single<Friends> {
+        return nodeService.getFriends(userName)
+    }
 }

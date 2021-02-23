@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.amplifyframework.core.Amplify
+import com.example.nodejs.MainActivity
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_entry.*
@@ -27,10 +28,10 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
                 { result ->
                     Log.e("Sign IN", if(result.isSignInComplete) "Sign In complete" else "Not Complete")
                     if(result.isSignInComplete) {
-//                        val direction =
-//                            EntryFragmentDirections.actionEntryFragmentToProfileFragment2(name)
-                        val bundle = bundleOf("name" to name)
-                        findNavController().navigate(R.id.profileFragment2, bundle)
+                        val direction =
+                            EntryFragmentDirections.actionEntryFragmentToProfileFragment2(name)
+                        (activity as MainActivity).setUserName(name)
+                        findNavController().navigate(direction)
                     }
                 },
                 { error -> Log.e("Sign In", "Error ${error.message}")}

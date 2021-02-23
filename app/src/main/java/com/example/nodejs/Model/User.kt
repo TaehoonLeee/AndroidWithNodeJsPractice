@@ -11,3 +11,12 @@ data class Members(
 data class Member(
     val name : String
 )
+
+@JsonClass(generateAdapter = true)
+data class Friends(
+        val friends : List<Friend>
+)
+@JsonClass(generateAdapter = true)
+data class Friend(
+        val name : String
+)

@@ -100,9 +100,9 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="com.example.nodejs.UI.profile.ProfileFragment"
-        android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" >
+        android:name="com.example.nodejs.UI.friend.FriendsFragment"
+        android:label="friends_fragment"
+        tools:layout="@layout/friends_fragment" >
         <action
             android:id="@+id/action_profileFragment2_to_chatRoomFragment"
             app:destination="@id/chatRoomFragment" />
