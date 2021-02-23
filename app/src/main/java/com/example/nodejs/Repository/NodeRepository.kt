@@ -53,4 +53,8 @@ class NodeRepository @Inject constructor(
     fun getFriendCandidate(regex : String, userName : String) : Single<Friends> {
         return nodeService.getFriendCandidate(regex, userName)
     }
+
+    fun addFriend(myName : String, userName : String) : Call<Res_Message> {
+        return nodeService.addFriend(myName, userName)
+    }
 }

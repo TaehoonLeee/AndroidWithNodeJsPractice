@@ -3,13 +3,14 @@ package com.example.nodejs.UI.friend
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nodejs.Model.Friend
 import com.example.nodejs.R
 import kotlinx.android.synthetic.main.item_friend.view.*
 
-class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
+class AddFriendAdapter(private val navController: NavController) : RecyclerView.Adapter<AddFriendAdapter.FriendViewHolder>() {
     private var friends : List<Friend> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendViewHolder {
@@ -36,7 +37,7 @@ class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
             itemView.setOnClickListener {
                 val direction =
                     AddFriendFragmentDirections.actionAddFriendFragmentToProfileFragment(friend.name)
-                it.findNavController().navigate(direction)
+                navController.navigate(direction)
             }
             itemView.apply {
                 friendName.text = friend.name

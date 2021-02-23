@@ -130,5 +130,18 @@
         <argument
             android:name="userName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_addFriendFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment2" />
     </dialog>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.nodejs.UI.profile.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" >
+        <argument
+            android:name="userName"
+            app:argType="string" />
+    </fragment>
 </navigation>
