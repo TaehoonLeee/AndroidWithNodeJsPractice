@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.MainActivity
 import com.example.nodejs.R
@@ -33,6 +34,19 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
         rvFriendsList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = friendAdapter
+        }
+
+        friendsToolbar.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.plusBtn -> {
+                    val direction =
+                        FriendsFragmentDirections.actionProfileFragment2ToAddFriendFragment(userName)
+                    findNavController().navigate(direction)
+
+                    true
+                }
+                else -> false
+            }
         }
     }
 

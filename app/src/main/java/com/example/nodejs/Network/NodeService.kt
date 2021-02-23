@@ -44,4 +44,9 @@ interface NodeService {
 
     @GET("/friends/{userName}")
     fun getFriends(@Path("userName") userName : String) : Single<Friends>
+
+    @GET("/friendcandidate")
+    fun getFriendCandidate(
+        @Query("regex") regex : String,
+        @Query("userName") userName : String) : Single<Friends>
 }
