@@ -14,8 +14,8 @@
             android:id="@+id/action_entryFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
         <action
-            android:id="@+id/action_entryFragment_to_profileFragment2"
-            app:destination="@id/profileFragment2"
+            android:id="@+id/action_entryFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -95,23 +95,23 @@
         android:name="com.example.nodejs.UI.entry.SignUpFragment"
         android:label="SignUpFragment" >
         <action
-            android:id="@+id/action_signUpFragment_to_profileFragment2"
-            app:destination="@id/profileFragment2"
+            android:id="@+id/action_signUpFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment2"
+        android:id="@+id/friendsFragment"
         android:name="com.example.nodejs.UI.friend.FriendsFragment"
         android:label="friends_fragment"
         tools:layout="@layout/friends_fragment" >
         <action
-            android:id="@+id/action_profileFragment2_to_chatRoomFragment"
+            android:id="@+id/action_friendsFragment_to_chatRoomFragment"
             app:destination="@id/chatRoomFragment" />
         <argument
             android:name="name"
             app:argType="string" />
         <action
-            android:id="@+id/action_profileFragment2_to_addFriendFragment"
+            android:id="@+id/action_friendsFragment_to_addFriendFragment"
             app:destination="@id/addFriendFragment" />
     </fragment>
     <fragment
@@ -122,6 +122,9 @@
         <argument
             android:name="name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_settingFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment" />
     </fragment>
     <dialog
         android:id="@+id/addFriendFragment"
@@ -133,7 +136,9 @@
         <action
             android:id="@+id/action_addFriendFragment_to_profileFragment"
             app:destination="@id/profileFragment"
-            app:popUpTo="@id/profileFragment2" />
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popUpTo="@id/friendsFragment" />
     </dialog>
     <fragment
         android:id="@+id/profileFragment"
@@ -143,5 +148,13 @@
         <argument
             android:name="userName"
             app:argType="string" />
+        <argument
+            android:name="isFriend"
+            app:argType="boolean" />
     </fragment>
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:popEnterAnim="@anim/fragment_open_enter" />
 </navigation>

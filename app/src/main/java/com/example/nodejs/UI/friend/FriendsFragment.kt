@@ -40,7 +40,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
             when(it.itemId) {
                 R.id.plusBtn -> {
                     val direction =
-                        FriendsFragmentDirections.actionProfileFragment2ToAddFriendFragment(userName)
+                        FriendsFragmentDirections.actionFriendsFragmentToAddFriendFragment(userName)
                     findNavController().navigate(direction)
 
                     true

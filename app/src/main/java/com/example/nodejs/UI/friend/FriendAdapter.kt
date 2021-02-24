@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nodejs.Model.Friend
 import com.example.nodejs.R
+import com.example.nodejs.UI.profile.ProfileFragmentDirections
 import kotlinx.android.synthetic.main.item_friend.view.*
 
 class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
@@ -35,7 +36,7 @@ class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
         fun bind(friend : Friend) {
             itemView.setOnClickListener {
                 val direction =
-                    AddFriendFragmentDirections.actionAddFriendFragmentToProfileFragment(friend.name)
+                    ProfileFragmentDirections.actionGlobalProfileFragment(friend.name, true)
                 it.findNavController().navigate(direction)
             }
             itemView.apply {

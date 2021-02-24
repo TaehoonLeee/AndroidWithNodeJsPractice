@@ -21,15 +21,17 @@ class EntryFragment : Fragment(R.layout.fragment_entry) {
         Login.setOnClickListener {
             val name = editEmail.text.toString()
             val password = editPassword.text.toString()
+            var flag = true
 
             Amplify.Auth.signIn(
                 name,
                 password,
                 { result ->
                     Log.e("Sign IN", if(result.isSignInComplete) "Sign In complete" else "Not Complete")
-                    if(result.isSignInComplete) {
+                    if(result.isSignInComplete && flag) {
+                        flag = false
                         val direction =
-                            EntryFragmentDirections.actionEntryFragmentToProfileFragment2(name)
+                            EntryFragmentDirections.actionEntryFragmentToFriendsFragment(name)
                         (activity as MainActivity).setUserName(name)
                         findNavController().navigate(direction)
                     }

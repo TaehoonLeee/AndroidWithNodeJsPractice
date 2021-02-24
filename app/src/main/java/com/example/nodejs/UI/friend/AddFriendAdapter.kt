@@ -36,7 +36,7 @@ class AddFriendAdapter(private val navController: NavController) : RecyclerView.
         fun bind(friend : Friend) {
             itemView.setOnClickListener {
                 val direction =
-                    AddFriendFragmentDirections.actionAddFriendFragmentToProfileFragment(friend.name)
+                    AddFriendFragmentDirections.actionAddFriendFragmentToProfileFragment(friend.name, false)
                 navController.navigate(direction)
             }
             itemView.apply {

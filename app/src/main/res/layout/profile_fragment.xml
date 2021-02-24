@@ -45,15 +45,32 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"/>
-            <TextView
-                android:id="@+id/friendAddBtn"
+
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:text="추가하기"
-                app:drawableStartCompat="@drawable/ic_baseline_person_add_24" />
+                android:layout_weight="2">
+                <TextView
+                    android:id="@+id/friendAddBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text="추가하기"
+                    app:drawableStartCompat="@drawable/ic_baseline_person_add_24"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/friendChatBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text="채팅하기"
+                    android:drawablePadding="@dimen/standard_quarter"
+                    app:drawableStartCompat="@drawable/conversation" />
+
+            </FrameLayout>
 
             <View
                 android:layout_width="0dp"

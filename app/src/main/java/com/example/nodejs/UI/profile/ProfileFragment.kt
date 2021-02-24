@@ -24,6 +24,10 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
         super.onViewCreated(view, savedInstanceState)
         user_name.text = args.userName
 
+        val isFriend = args.isFriend
+        friendAddBtn.visibility = if( isFriend ) View.INVISIBLE else View.VISIBLE
+        friendChatBtn.visibility = if( isFriend ) View.VISIBLE else View.INVISIBLE
+
         friendAddBtn.setOnClickListener {
             val myName = (activity as MainActivity).getUserName()
             profileViewModel.addFriend(myName, args.userName, it.findNavController())
