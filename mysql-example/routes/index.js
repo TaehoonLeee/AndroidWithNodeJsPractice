@@ -49,6 +49,35 @@ router.get('/chatList/:name', function(req, res, next) {
 	});
 });
 
+router.get('/tmpchatList/:name', function(req, res, next) {
+        var name = req.params.name;
+        let obj = new Object();
+        let query = "SELECT a.* FROM chatRoom a, chatRoomJoin b WHERE a.name = b.roomName and b.username = ?";
+        let object = new Object();
+        let arr = [];
+        pool.query(query, [name], async function(err, result) {
+                if(err) console.log(err);
+                console.log(result);
+                for(let i = 0; i < result.length; i++) {
+                        let o = new Object();
+                        o.name = result[i].name;
+			o.access = result[i].access;
+			o.topMessage = result[i].topMessage;
+			o.topTimeStamp = result[i].topTimeStamp;
+
+                        var roomName = result[i].name;
+                        var query2 = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName = ? GROUP BY roomName";
+                        var queryRes = await getResult(query2, roomName);
+                        console.log(queryRes[0].memberNumber);
+                        o.memberNumber = queryRes[0].memberNumber;
+                        arr.push(o);
+                }
+                obj.chatRoomList = arr;
+                console.log(obj);
+                res.json(obj);
+        });
+});
+
 router.get('/chatList', function(req, res, next) {
 	var body = req.query.name;
 	let obj = new Object();
@@ -104,9 +133,10 @@ router.post('/chat', function(req, res, next) {
 			if(err) {
 				console.log(err);
 			}
-			
-			res.send('{"code":1, "msg":"successed"}');
-		});
+	});
+	client.query("UPDATE chatRoom SET topMessage=?, topTimeStamp=? where name=?", [body.message, body.timeStamp, body.roomName], function(err, rows, fields) {
+	});
+	res.send('{"code" : 1, "msg" : "successed"}');
 });
 
 router.post('/enter', function(req, res, next) {
@@ -196,6 +226,15 @@ router.get('/friendcandidate', function(req, res, next) {
 		}
 	});
 });
-		
 
+router.post('/friendadd', function(req, res, next) {
+	var body = req.body;
+
+	client.query("INSERT INTO Relationship VALUES(?, ?)", [body.myName, body.userName], function(err, rows, fields) {
+		if(err) { console.log(err); }
+	});
+
+	res.send('{"code":1, "msg":"successed"}');	
+});
+		
 module.exports = router;
