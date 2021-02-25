@@ -41,32 +41,6 @@ function getResult3(sql, userName, roomName) {
 	})
 }
 
-router.get('/chatList/:name', function(req, res, next) {
-	var name = req.params.name;
-	let obj = new Object();
-	let query = "SELECT a.name FROM chatRoom a, chatRoomJoin b WHERE a.name = b.roomName and b.username = ?";
-	let object = new Object();
-	let arr = [];
-	pool.query(query, [name], async function(err, result) {
-		if(err) console.log(err);
-		console.log(result);
-		for(let i = 0; i < result.length; i++) {
-			let o = new Object();
-			o.name = result[i].name;
-
-			var roomName = result[i].name;
-			var query2 = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName = ? GROUP BY roomName";
-			var queryRes = await getResult(query2, roomName);
-			console.log(queryRes[0].memberNumber);
-			o.memberNumber = queryRes[0].memberNumber;
-			arr.push(o);			
-		}
-		obj.chatRoomList = arr;
-		console.log(obj);
-		res.json(obj);
-	});
-});
-
 router.get('/tmpchatList/:name', function(req, res, next) {
         var name = req.params.name;
         let obj = new Object();
@@ -77,19 +51,19 @@ router.get('/tmpchatList/:name', function(req, res, next) {
                 if(err) console.log(err);
                 console.log(result);
                 for(let i = 0; i < result.length; i++) {
-                        let o = new Object();
-                        o.name = result[i].name;
+						let o = new Object();
+						o.name = result[i].name;
 						o.access = result[i].access;
 						o.topMessage = result[i].topMessage;
 						o.topTimeStamp = result[i].topTimeStamp;
 
-                        var roomName = result[i].name;
-                        var query2 = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName = ? GROUP BY roomName";
-                        var queryRes = await getResult(query2, roomName);
-                        console.log(queryRes[0].memberNumber);
-                        o.memberNumber = queryRes[0].memberNumber;
-                        arr.push(o);
-                }
+						var roomName = result[i].name;
+						var query2 = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName = ? GROUP BY roomName";
+						var queryRes = await getResult(query2, roomName);
+						console.log(queryRes[0].memberNumber);
+						o.memberNumber = queryRes[0].memberNumber;
+						arr.push(o);
+				}
                 obj.chatRoomList = arr;
                 console.log(obj);
                 res.json(obj);
@@ -126,26 +100,54 @@ router.get('/chatList', function(req, res, next) {
 });
 	
 router.get('/chat/:roomName', function(req, res, next) {
-	var name = req.params.roomName;
-	client.query("SELECT * FROM Message WHERE Message.chatRoomName = ?", [name], function(err, rows, fields) {
-		if(err) {
-			console.log(err);
-		}
-		else {
-			let obj = new Object();
-			let arr = [];
-			for(let i = 0; i < rows.length; i++) {
-				let o = new Object();
-				o.sender = rows[i].sender;
-				o.message = rows[i].message;
-				o.timeStamp = rows[i].timeStamp;
-				arr.push(o);
+	var roomName = req.params.roomName;
+	var userName = req.query.userName;
+	console.log("test" + ", " + userName);
+	if(roomName.includes('-')) {
+		console.log("test2");
+		var opponentName = roomName.substring(userName.length+1);
+		var roomName2 = opponentName + '-' + userName;
+		console.log(roomName + ", " + roomName2);
+		client.query("SELECT * FROM Message WHERE chatRoomName = ? or chatRoomName = ?", [roomName, roomName2], function(err, rows, fields) {
+			if(err) { console.log(err); }
+			else {
+				let obj = new Object();
+				let arr = [];
+				for(let i = 0; i < rows.length; i++) {
+					let o = new Object();
+					o.sender = rows[i].sender;
+					o.message = rows[i].message;
+					o.timeStamp = rows[i].timeStamp;
+					arr.push(o);
+				}
+				obj.messages = arr;
+				console.log(arr);
+				res.json(obj);
 			}
-			obj.messages = arr;
-			console.log(arr);
-			res.json(obj);
-		}
-	});
+		});
+	}
+	else {
+		console.log("test3");
+    	client.query("SELECT * FROM Message WHERE Message.chatRoomName = ?", [roomName], function(err, rows, fields) {
+        	if(err) {
+            	console.log(err);
+        	}
+        	else {
+            	let obj = new Object();
+            	let arr = [];
+            	for(let i = 0; i < rows.length; i++) {
+                	let o = new Object();
+                	o.sender = rows[i].sender;
+                	o.message = rows[i].message;
+                	o.timeStamp = rows[i].timeStamp;
+                	arr.push(o);
+            	}
+            	obj.messages = arr;
+           		console.log(arr);
+        	    res.json(obj);
+    	    }
+	    });
+	}	
 });
 	
 router.post('/chat', function(req, res, next) {
@@ -163,8 +165,12 @@ router.post('/chat', function(req, res, next) {
 
 router.post('/enter', function(req, res, next) {
 	var body = req.body;
+	var myName = body.userName;
+	var roomName = body.roomName;
+	var opponentName = roomName.substring(myName.length+1);
+	var roomName2 = opponentName + '-' + myName;
 	
-	pool.query("SELECT * FROM chatRoomJoin where userName=? and roomName=?", [body.userName, body.roomName], async function(err, rows, fields) {
+	pool.query("SELECT * FROM chatRoomJoin where (userName=? and roomName=?) or (username=? and roomname=?)", [body.userName, body.roomName, body.userName, roomName2], async function(err, rows, fields) {
 		if(err) { console.log(err); }
 		else {
 			if(rows.length == 0) {
@@ -186,8 +192,9 @@ router.post('/createroom', function(req, res, next) {
 	
 	var myName = body.userName;
 	var roomName = body.roomName;
-	var opponentName = roomName.substring(myName.length+1);		
-	pool.query("SELECT * FROM chatRoomJoin where userName=? and roomName=?", [body.userName, body.roomName], async function(err, rows, fields) {
+	var opponentName = roomName.substring(myName.length+1);
+	var roomName2 = opponentName + '-' + myName;		
+	pool.query("SELECT * FROM chatRoomJoin where (userName=? and roomName=?) or (username=? and roomname=?)", [body.userName, body.roomName, body.userName, roomName2], async function(err, rows, fields) {
 		if(err) { console.log(err); }
 		else {
 			if(rows.length == 0) {
