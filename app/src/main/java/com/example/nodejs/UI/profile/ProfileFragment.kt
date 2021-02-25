@@ -41,6 +41,10 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
             profileViewModel.addFriend(myName, args.userName, it.findNavController())
         }
 
+        friendChatBtn.setOnClickListener {
+            val myName = (activity as MainActivity).getUserName()
+            profileViewModel.onClickChat(myName, "$myName-${args.userName}", it.findNavController())
+        }
     }
 
 }
