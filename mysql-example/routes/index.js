@@ -41,6 +41,15 @@ function getResult3(sql, userName, roomName) {
 	})
 }
 
+function getResult4(sql, message, timeStamp, index, roomName) {
+	return new Promise(function(resolve, reject) {
+		pool.query(sql, [message, timeStamp, index, roomName], function(err, result) {
+			if(err) { reject(erR) }
+			else { resolve(result) }
+		})
+	})
+}
+
 router.get('/tmpchatList/:name', function(req, res, next) {
         var name = req.params.name;
         let obj = new Object();
@@ -56,6 +65,7 @@ router.get('/tmpchatList/:name', function(req, res, next) {
 						o.access = result[i].access;
 						o.topMessage = result[i].topMessage;
 						o.topTimeStamp = result[i].topTimeStamp;
+						o.topIndex = result[i].topIndex;
 
 						var roomName = result[i].name;
 						var query2 = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName = ? GROUP BY roomName";
@@ -86,6 +96,7 @@ router.get('/chatList', function(req, res, next) {
 			o.access = rows[i].access;
 			o.topMessage = rows[i].topMessage;
 			o.topTimeStamp = rows[i].topTimeStamp;
+			o.topIndex = rows[i].topIndex;
 			
 			var roomName = rows[i].name;
 			var query = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName =? GROUP BY roomName";
@@ -153,14 +164,24 @@ router.get('/chat/:roomName', function(req, res, next) {
 router.post('/chat', function(req, res, next) {
 	var body = req.body;
 
-	client.query("INSERT INTO Message VALUES(?, ?, ?, ?)", [body.sender, body.message, body.timeStamp, body.roomName], function(err, rows, fields) {
-			if(err) {
-				console.log(err);
-			}
+	//client.query("INSERT INTO Message(sender, message, timeStamp, chatRoomName) VALUES(?, ?, ?, ?)", [body.sender, body.message, body.timeStamp, body.roomName], function(err, rows, fields) {
+	//		if(err) {
+	//			console.log(err);
+	//		}
+	//		else {
+	//			console.log(rows.insertId);	
+	//		}
+	//});
+	//client.query("UPDATE chatRoom SET topMessage=?, topTimeStamp=? where name=?", [body.message, body.timeStamp, body.roomName], function(err, rows, fields) {
+	//});
+	pool.query("INSERT INTO Message(sender, message, timeStamp, chatRoomName) VALUES(?, ?, ?, ?)", [body.sender, body.message, body.timeStamp, body.roomName], async function(err, rows, fields) {
+		if(err) { console.log(err); }
+		else {
+			var query = "UPDATE chatRoom SET topMessage=?, topTimeStamp=?, topIndex=? where name=?"
+			var queryRes = await getResult4(query, body.message, body.timeStamp, rows.insertId, body.roomName);
+			res.send('{"code": 1, "msg": "successed"}');
+		}
 	});
-	client.query("UPDATE chatRoom SET topMessage=?, topTimeStamp=? where name=?", [body.message, body.timeStamp, body.roomName], function(err, rows, fields) {
-	});
-	res.send('{"code" : 1, "msg" : "successed"}');
 });
 
 router.post('/enter', function(req, res, next) {
