@@ -102,4 +102,8 @@ dependencies {
     // AWS Amplify Authentication
     implementation 'com.amplifyframework:aws-auth-cognito:1.16.13'
 
+    // for glide
+    def glide_version = "4.11.0"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 }

@@ -38,5 +38,8 @@ data class ChatList(
 @JsonClass(generateAdapter = true)
 data class ChatRoom(
         val name : String,
-        val memberNumber : Int
+        val memberNumber : Int,
+        val topMessage : String?,
+        val topTimeStamp : String?,
+        val access : String
 )

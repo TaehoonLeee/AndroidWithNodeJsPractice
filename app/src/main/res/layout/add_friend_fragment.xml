@@ -27,7 +27,6 @@
         android:id="@+id/rvFriendsCandidate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_friend"
-        android:visibility="gone"/>
+        tools:listitem="@layout/item_friend" />
 
 </LinearLayout>

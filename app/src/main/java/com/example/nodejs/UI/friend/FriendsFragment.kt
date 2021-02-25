@@ -3,6 +3,7 @@ package com.example.nodejs.UI.friend
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.example.nodejs.MainActivity
 import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.friends_fragment.*
+import kotlinx.android.synthetic.main.search_layout.*
 
 @AndroidEntryPoint
 class FriendsFragment : Fragment(R.layout.friends_fragment) {
@@ -40,7 +42,7 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
             when(it.itemId) {
                 R.id.plusBtn -> {
                     val direction =
-                        FriendsFragmentDirections.actionProfileFragment2ToAddFriendFragment(userName)
+                        FriendsFragmentDirections.actionFriendsFragmentToAddFriendFragment(userName)
                     findNavController().navigate(direction)
 
                     true
@@ -48,6 +50,26 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
                 else -> false
             }
         }
+
+        searchView.queryHint = "친구 이름을 검색하세요."
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(!newText.isNullOrEmpty()) {
+                    friendAdapter.setFriends(friendsViewModel.friends.value!!)
+                    friendAdapter.onSearchFriends(newText)
+                }
+                else {
+                    friendAdapter.setFriends(friendsViewModel.friends.value!!)
+                }
+
+                return false
+            }
+
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

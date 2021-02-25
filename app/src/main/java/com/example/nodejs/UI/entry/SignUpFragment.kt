@@ -49,7 +49,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 if(result.isSignUpComplete) {
                     signUpViewModel.onCreateMember(id)
                     val direction =
-                        SignUpFragmentDirections.actionSignUpFragmentToProfileFragment2(id)
+                        SignUpFragmentDirections.actionSignUpFragmentToFriendsFragment(id)
                     (activity as MainActivity).setUserName(id)
                     findNavController().navigate(direction)
                 }

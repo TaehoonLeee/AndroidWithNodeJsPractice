@@ -17,7 +17,7 @@ interface NodeService {
                    @Field("timeStamp") timeStamp : String,
                     @Field("roomName") roomName : String) : Call<Res_Message>
 
-    @GET("/chatList/{name}")
+    @GET("/tmpchatList/{name}")
     fun getChatList(@Path("name") name : String) : Single<ChatList>
 
     @GET("/chatList")
@@ -49,4 +49,10 @@ interface NodeService {
     fun getFriendCandidate(
         @Query("regex") regex : String,
         @Query("userName") userName : String) : Single<Friends>
+
+    @FormUrlEncoded
+    @POST("/friendadd")
+    fun addFriend(
+        @Field("myName") myName : String,
+        @Field("userName") userName : String) : Call<Res_Message>
 }

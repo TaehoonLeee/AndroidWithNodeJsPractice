@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.R
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.add_friend_fragment.*
 class AddFriendFragment : BottomSheetDialogFragment() {
 
     private val addFriendsViewModel : AddFriendViewModel by viewModels()
-    private lateinit var friendCandidateAdapter: FriendAdapter
+    private lateinit var friendCandidateAdapter: AddFriendAdapter
     private val args : AddFriendFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +31,8 @@ class AddFriendFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        friendCandidateAdapter = FriendAdapter()
+        val navController = this.findNavController()
+        friendCandidateAdapter = AddFriendAdapter(navController)
         rvFriendsCandidate.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = friendCandidateAdapter

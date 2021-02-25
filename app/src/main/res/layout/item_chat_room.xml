@@ -9,17 +9,72 @@
     app:contentPadding="@dimen/standard_full"
     app:cardElevation="@dimen/standard_half">
 
-    <TextView
-        android:id="@+id/roomName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="@tools:sample/lorem"/>
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/memberNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="@tools:sample/lorem"
-        android:layout_gravity="end"/>
+        <ImageView
+            android:id="@+id/chatProfile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/my_image"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/standard_half">
+
+            <RelativeLayout
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/access"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/opinion" />
+                <TextView
+                    android:id="@+id/roomName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/access"
+                    android:layout_marginStart="@dimen/standard_quarter"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    tools:text="@tools:sample/lorem" />
+
+                <TextView
+                    android:id="@+id/memberNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="4"
+                    android:layout_marginStart="@dimen/standard_half"
+                    android:layout_toEndOf="@id/roomName"/>
+
+                <TextView
+                    android:id="@+id/topTimeStamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="@tools:sample/date/hhmm"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/topMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="@tools:sample/lorem/random"
+                android:textColor="@color/black"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/standard_quarter"
+                android:layout_below="@id/title"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
