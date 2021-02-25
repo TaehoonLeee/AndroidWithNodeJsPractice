@@ -104,8 +104,9 @@
         android:layout_above="@id/profile_board">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/profileImage"
+            android:layout_width="132dp"
+            android:layout_height="132dp"
             android:adjustViewBounds="false"
             android:cropToPadding="false"
             android:src="@drawable/ic_baseline_person_24" />

@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.nodejs.Model.Friend
 import com.example.nodejs.R
 import com.example.nodejs.UI.profile.ProfileFragmentDirections
+import com.example.nodejs.glide.GlideApp
 import kotlinx.android.synthetic.main.item_friend.view.*
 
 class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
@@ -49,6 +51,11 @@ class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
                 it.findNavController().navigate(direction)
             }
             itemView.apply {
+                GlideApp.with(friendImage)
+                        .load(R.drawable.my_image)
+                        .transform(CircleCrop())
+                        .thumbnail(0.5f)
+                        .into(friendImage)
                 friendName.text = friend.name
             }
         }
