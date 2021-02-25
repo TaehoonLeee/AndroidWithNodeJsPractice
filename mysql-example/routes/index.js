@@ -163,8 +163,12 @@ router.post('/chat', function(req, res, next) {
 
 router.post('/enter', function(req, res, next) {
 	var body = req.body;
+	var myName = body.userName;
+	var roomName = body.roomName;
+	var opponentName = roomName.substring(myName.length+1);
+	var roomName2 = opponentName + '-' + myName;
 	
-	pool.query("SELECT * FROM chatRoomJoin where userName=? and roomName=?", [body.userName, body.roomName], async function(err, rows, fields) {
+	pool.query("SELECT * FROM chatRoomJoin where (userName=? and roomName=?) or (username=? and roomname=?)", [body.userName, body.roomName, body.userName, roomName2], async function(err, rows, fields) {
 		if(err) { console.log(err); }
 		else {
 			if(rows.length == 0) {
@@ -186,8 +190,9 @@ router.post('/createroom', function(req, res, next) {
 	
 	var myName = body.userName;
 	var roomName = body.roomName;
-	var opponentName = roomName.substring(myName.length+1);		
-	pool.query("SELECT * FROM chatRoomJoin where userName=? and roomName=?", [body.userName, body.roomName], async function(err, rows, fields) {
+	var opponentName = roomName.substring(myName.length+1);
+	var roomName2 = opponentName + '-' + myName;		
+	pool.query("SELECT * FROM chatRoomJoin where (userName=? and roomName=?) or (username=? and roomname=?)", [body.userName, body.roomName, body.userName, roomName2], async function(err, rows, fields) {
 		if(err) { console.log(err); }
 		else {
 			if(rows.length == 0) {
