@@ -18,7 +18,7 @@ class CreateChatRoomViewModel @ViewModelInject constructor(
 ) : ViewModel() {
     private val userName = savedStateHandle.get<String>("userName")
     fun createRoom(roomName : String, navController: NavController) {
-        nodeRepository.createRoom(userName!!, roomName).enqueue(object : Callback<Res_Message> {
+        nodeRepository.createRoom(userName!!, roomName, "public").enqueue(object : Callback<Res_Message> {
             override fun onFailure(call: Call<Res_Message>, t: Throwable) {
                 Log.e("CreateChatRoomViewModel", t.message!!)
             }

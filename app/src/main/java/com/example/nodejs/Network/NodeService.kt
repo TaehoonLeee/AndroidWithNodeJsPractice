@@ -33,7 +33,8 @@ interface NodeService {
     @POST("/createroom")
     fun createRoom(
             @Field("userName") userName : String,
-            @Field("roomName") roomName : String) : Call<Res_Message>
+            @Field("roomName") roomName : String,
+            @Field("access") access : String) : Call<Res_Message>
 
     @GET("/chatmember/{roomName}")
     fun getChatMembers(@Path("roomName") roomName : String) : Single<Members>

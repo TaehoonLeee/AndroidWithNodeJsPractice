@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.nodejs.Model.ChatRoom
 import com.example.nodejs.R
+import com.example.nodejs.glide.GlideApp
 import kotlinx.android.synthetic.main.item_chat_room.view.*
 
 class AllChatRoomAdapter(val onRoomClick : (ChatRoom) -> Unit) : RecyclerView.Adapter<AllChatRoomAdapter.AllChatRoomViewHolder>() {
@@ -39,7 +41,21 @@ class AllChatRoomAdapter(val onRoomClick : (ChatRoom) -> Unit) : RecyclerView.Ad
                 onRoomClick(chatRoom)
             }
             itemView.apply {
+
+                GlideApp.with(chatProfile)
+                    .load(R.drawable.my_image)
+                    .transform(CircleCrop())
+                    .thumbnail(0.5f)
+                    .into(chatProfile)
+                GlideApp.with(access)
+                    .load(R.drawable.opinion)
+                    .transform(CircleCrop())
+                    .thumbnail(0.2f)
+                    .into(access)
                 roomName.text = chatRoom.name
+                access.visibility = if (chatRoom.access != "public") View.GONE else View.VISIBLE
+                topMessage.text = chatRoom.topMessage
+                topTimeStamp.text = chatRoom.topTimeStamp
                 memberNumber.text = chatRoom.memberNumber.toString()
             }
         }
