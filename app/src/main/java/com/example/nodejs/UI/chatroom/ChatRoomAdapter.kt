@@ -65,7 +65,7 @@ class ChatRoomAdapter(val userName : String) : RecyclerView.Adapter<ChatRoomAdap
                     .transform(CircleCrop())
                     .thumbnail(0.2f)
                     .into(access)
-                roomName.text = chatRoom.name
+                roomName.text = chatRoom.name.split("-").filter { it != userName }.joinToString()
                 access.visibility = if (chatRoom.access != "public") View.GONE else View.VISIBLE
                 topMessage.text = chatRoom.topMessage
                 topTimeStamp.text = chatRoom.topTimeStamp
