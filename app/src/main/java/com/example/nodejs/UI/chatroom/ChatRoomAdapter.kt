@@ -31,7 +31,10 @@ class ChatRoomAdapter(val userName : String) : RecyclerView.Adapter<ChatRoomAdap
     }
 
     fun setChatList(chatList : List<ChatRoom>) {
-        this.chatList = chatList
+
+        this.chatList = chatList.sortedWith(Comparator {
+            o1, o2 -> o2.topIndex!!.compareTo(o1.topIndex!!)
+        })
         notifyDataSetChanged()
     }
 
@@ -45,7 +48,6 @@ class ChatRoomAdapter(val userName : String) : RecyclerView.Adapter<ChatRoomAdap
         this.chatList = tmpList
         notifyDataSetChanged()
     }
-
 
     inner class ChatRoomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         fun bind(chatRoom : ChatRoom) {

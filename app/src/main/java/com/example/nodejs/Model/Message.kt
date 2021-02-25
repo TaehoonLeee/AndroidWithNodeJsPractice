@@ -13,6 +13,7 @@ data class Messages(
 
 @JsonClass(generateAdapter = true)
 data class Message(
+        val index : Int?,
         val sender : String,
         val message : String,
         val timeStamp : String
@@ -41,5 +42,6 @@ data class ChatRoom(
         val memberNumber : Int,
         val topMessage : String?,
         val topTimeStamp : String?,
-        val access : String
+        val access : String,
+        val topIndex : Int
 )
