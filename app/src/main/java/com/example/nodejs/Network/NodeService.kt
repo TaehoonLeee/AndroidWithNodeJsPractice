@@ -7,8 +7,9 @@ import retrofit2.http.*
 
 interface NodeService {
 
-    @GET("chat/{name}")
-    fun getMessages(@Path("name") name : String) : Single<Messages>
+    @GET("chat/{roomName}")
+    fun getMessages(@Path("roomName") roomName : String,
+                    @Query("userName") userName : String) : Single<Messages>
 
     @FormUrlEncoded
     @POST("chat")

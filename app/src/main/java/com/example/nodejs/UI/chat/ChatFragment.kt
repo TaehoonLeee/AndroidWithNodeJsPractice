@@ -14,6 +14,7 @@ import com.example.nodejs.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_fragment.*
+import kotlinx.android.synthetic.main.item_chat_room.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -46,7 +47,8 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             msgToSend.text = null
         }
 
-        chatToolbar.title = roomName
+        chatToolbar.title = roomName.split("-").filter { it != userName }.joinToString()
+
         focusDownfab.setOnClickListener {
             focusDown(false)
         }

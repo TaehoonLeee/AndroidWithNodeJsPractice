@@ -13,8 +13,8 @@ import javax.inject.Singleton
 class NodeRepository @Inject constructor(
     private val nodeService: NodeService
 ){
-    fun getMessages(name : String) : Single<Messages> {
-        return nodeService.getMessages(name)
+    fun getMessages(userName : String, roomName : String) : Single<Messages> {
+        return nodeService.getMessages(roomName, userName)
             .subscribeOn(Schedulers.io())
     }
 

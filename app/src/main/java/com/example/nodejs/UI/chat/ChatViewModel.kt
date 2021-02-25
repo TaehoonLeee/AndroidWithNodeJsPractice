@@ -26,19 +26,20 @@ class ChatViewModel @ViewModelInject constructor(
     val messages : LiveData<List<Message>> = _messages
 
     private var roomName : String = savedStateHandle.get<String>("roomName")!!
+    private var userName : String = savedStateHandle.get<String>("userName")!!
 
     init {
-        onGetMessages(roomName)
+        onGetMessages(roomName, userName)
     }
 
-    private fun onGetMessages(name : String) {
-        nodeRepository.getMessages(name)
+    private fun onGetMessages(userName : String, roomName : String) {
+        nodeRepository.getMessages(roomName, userName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe{ messages -> _messages.value = messages.messages }
     }
 
-    private fun onCallbackGetMessages(name : String, scrollView: ScrollView) {
-        nodeRepository.getMessages(name)
+    private fun onCallbackGetMessages(userName : String, roomName : String, scrollView: ScrollView) {
+        nodeRepository.getMessages(roomName, userName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { messages ->
                     _messages.value = messages.messages
@@ -56,7 +57,7 @@ class ChatViewModel @ViewModelInject constructor(
 
             override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {
                 if (response.isSuccessful) {
-                    onCallbackGetMessages(roomName, scrollView)
+                    onCallbackGetMessages(roomName, sender, scrollView)
                 }
             }
         })
