@@ -184,23 +184,22 @@ router.post('/enter', function(req, res, next) {
 router.post('/createroom', function(req, res, next) {
 	var body = req.body;
 	
+	var myName = body.userName;
+	var roomName = body.roomName;
+	var opponentName = roomName.substring(myName.length+1);		
 	pool.query("SELECT * FROM chatRoomJoin where userName=? and roomName=?", [body.userName, body.roomName], async function(err, rows, fields) {
 		if(err) { console.log(err); }
 		else {
 			if(rows.length == 0) {
 				var query = "INSERT INTO chatRoom(name, access, topMessage, topTimeStamp) VALUES(?, ?, ?, ?)";
 				var queryRes = await getResult2(query, body.roomName, body.access, "", "");
-				//client.query("INSERT INTO chatRoom(name, access, topMessage, topTimeStamp) VALUES(?, ?, ?, ?)", [body.roomName, body.access, "", ""], function(err, rows, fields) {
-            	//	if(err) { console.log("chatroom" + err); }
-        		//});
+				
 				query = "INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)";
 				queryRes = await getResult3(query, body.userName, body.roomName);
-        		//client.query("INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)", [body.userName, body.roomName], function(err, rows, fields) {
-            	//	if(err) { console.log("chatroomjoin" + err); }
-        		//});
+				query = "INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)";
+				queryRes = await getResult3(query, opponentName, roomName);
 			} 
 		}
-	
 		res.send('{"code":1, "msg":"successed"}');
 	});
 
