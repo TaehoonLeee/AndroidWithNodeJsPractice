@@ -31,6 +31,15 @@ class FriendAdapter : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun onSearchFriends(query : String) {
+        val tmpList : MutableList<Friend> = mutableListOf()
+        repeat(friends.size) {
+            if(friends[it].name.contains(query)) tmpList.add(friends[it])
+        }
+        this.friends = tmpList
+        notifyDataSetChanged()
+    }
+
     inner class FriendViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(friend : Friend) {
