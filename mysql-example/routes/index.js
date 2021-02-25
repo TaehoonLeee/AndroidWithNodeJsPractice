@@ -23,6 +23,24 @@ function getResult(sql, name) {
 	})
 }
 
+function getResult2(sql, name, access, message, timeStamp) {
+	return new Promise(function(resolve, reject) {
+		pool.query(sql, [name, access, message, timeStamp], function(err, result) {
+			if(err) { reject(err) }
+			else { resolve(result) }
+		})
+	})
+}
+
+function getResult3(sql, userName, roomName) {
+	return new Promise(function(resolve, reject) {
+		pool.query(sql, [userName, roomName], function(err, result) {
+			if(err) { reject(err) }
+			else { resolve(result) }
+		})
+	})
+}
+
 router.get('/chatList/:name', function(req, res, next) {
 	var name = req.params.name;
 	let obj = new Object();
@@ -61,9 +79,9 @@ router.get('/tmpchatList/:name', function(req, res, next) {
                 for(let i = 0; i < result.length; i++) {
                         let o = new Object();
                         o.name = result[i].name;
-			o.access = result[i].access;
-			o.topMessage = result[i].topMessage;
-			o.topTimeStamp = result[i].topTimeStamp;
+						o.access = result[i].access;
+						o.topMessage = result[i].topMessage;
+						o.topTimeStamp = result[i].topTimeStamp;
 
                         var roomName = result[i].name;
                         var query2 = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName = ? GROUP BY roomName";
@@ -82,16 +100,20 @@ router.get('/chatList', function(req, res, next) {
 	var body = req.query.name;
 	let obj = new Object();
 
-	pool.query("SELECT roomName FROM chatRoomJoin WHERE roomName NOT IN (SELECT roomName FROM chatRoomJoin WHERE userName = ?) GROUP BY roomName", [body], async function(err, rows, fields) {
+	var query = "select a.* from chatroom a where a.name in (select roomname from chatroomjoin where roomname not in (select roomname from chatroomjoin where username=?)) and a.access='public'";
+	pool.query(query, [body], async function(err, rows, fields) {
 		if(err) { console.log(err); }
 		
 		let arr = [];
 		for(let i = 0; i < rows.length; i++) {
 			let o = new Object();
 			console.log(rows[i]);
-			o.name = rows[i].roomName;
+			o.name = rows[i].name;
+			o.access = rows[i].access;
+			o.topMessage = rows[i].topMessage;
+			o.topTimeStamp = rows[i].topTimeStamp;
 			
-			var roomName = rows[i].roomName;
+			var roomName = rows[i].name;
 			var query = "SELECT COUNT(roomName) AS memberNumber FROM chatRoomJoin WHERE roomName =? GROUP BY roomName";
 			var queryRes = await getResult(query, roomName);
 			o.memberNumber = queryRes[0].memberNumber;
@@ -141,24 +163,46 @@ router.post('/chat', function(req, res, next) {
 
 router.post('/enter', function(req, res, next) {
 	var body = req.body;
-
-	client.query("INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)", [body.userName, body.roomName], function(err, rows, fields) {
+	
+	pool.query("SELECT * FROM chatRoomJoin where userName=? and roomName=?", [body.userName, body.roomName], async function(err, rows, fields) {
 		if(err) { console.log(err); }
-		res.send('{"code":1, "msg":"successed"}');
+		else {
+			if(rows.length == 0) {
+				var query = "INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)"
+				var queryRes = await getResult3(query, body.userName, body.roomName);
+				//client.query("INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)", [body.userName, body.roomName], function(err, rows, fields) {
+				//	if(err) { console.log(err); }
+				//res.send('{"code":1, "msg":"successed"}');
+				//});
+			}
+		}
+
+		res.send('{"code": 1, "msg": "successed"}');
 	});
 });
 
 router.post('/createroom', function(req, res, next) {
 	var body = req.body;
-
-	client.query("INSERT INTO chatRoom(name) VALUES(?)", [body.roomName], function(err, rows, fields) {
-		if(err) { console.log("chatroom" + err); }
+	
+	var myName = body.userName;
+	var roomName = body.roomName;
+	var opponentName = roomName.substring(myName.length+1);		
+	pool.query("SELECT * FROM chatRoomJoin where userName=? and roomName=?", [body.userName, body.roomName], async function(err, rows, fields) {
+		if(err) { console.log(err); }
+		else {
+			if(rows.length == 0) {
+				var query = "INSERT INTO chatRoom(name, access, topMessage, topTimeStamp) VALUES(?, ?, ?, ?)";
+				var queryRes = await getResult2(query, body.roomName, body.access, "", "");
+				
+				query = "INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)";
+				queryRes = await getResult3(query, body.userName, body.roomName);
+				query = "INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)";
+				queryRes = await getResult3(query, opponentName, roomName);
+			} 
+		}
+		res.send('{"code":1, "msg":"successed"}');
 	});
 
-	client.query("INSERT INTO chatRoomJoin(userName, roomName) VALUES(?, ?)", [body.userName, body.roomName], function(err, rows, fields) {
-		if(err) { console.log("chatroomjoin" + err); }	
-	});
-	res.send('{"code":1, "msg":"successed"}');
 });
 
 router.get('/chatmember/:roomName', function(req, res, next) {
