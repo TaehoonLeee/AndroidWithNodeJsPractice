@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/chat_sender"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/chatReceiverImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        tools:ignore="ContentDescription"
+        tools:src="@tools:sample/avatars"/>
+<LinearLayout
+    android:id="@+id/chat_sender"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginBottom="@dimen/standard_quarter"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_marginBottom="@dimen/standard_quarter">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,6 +37,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/receiverMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -61,4 +75,5 @@
 
     </LinearLayout>
 
+</LinearLayout>
 </LinearLayout>
