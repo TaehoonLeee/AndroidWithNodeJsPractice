@@ -63,9 +63,14 @@ io.sockets.on('connection', function(socket) {
 		console.log(`Username : ${userName} joined Room name : ${roomName}`)
 	});
 	socket.on('newMessage', function(data) {
+		const jsonData = JSON.parse(JSON.stringify(data));
+		var roomName = jsonData.roomName;
+		var message = jsonData.message;
 		console.log('New message is received');
-		console.log(`Room Name : ${data}`);
-		socket.broadcast.to(`${data}`).emit('updateChat', `${data}`);
+		//console.log(`Room Name : ${data}`);
+		console.log(`Room Name : ${roomName}, Message : ${message}`);
+		//socket.broadcast.to(`${data}`).emit('updateChat', `${data}`);
+		socket.broadcast.to(`${roomName}`).emit('updateChat', `${message}`);
 	});
 	socket.on('quit', function(data) {
 		console.log('A user quit.');

@@ -58,7 +58,7 @@ router.get('/tmpchatList/:name', function(req, res, next) {
         let arr = [];
         pool.query(query, [name], async function(err, result) {
                 if(err) console.log(err);
-                console.log(result);
+                //console.log(result);
                 for(let i = 0; i < result.length; i++) {
 						let o = new Object();
 						o.name = result[i].name;
@@ -75,7 +75,7 @@ router.get('/tmpchatList/:name', function(req, res, next) {
 						arr.push(o);
 				}
                 obj.chatRoomList = arr;
-                console.log(obj);
+                //console.log(obj);
                 res.json(obj);
         });
 });
@@ -113,9 +113,8 @@ router.get('/chatList', function(req, res, next) {
 router.get('/chat/:roomName', function(req, res, next) {
 	var roomName = req.params.roomName;
 	var userName = req.query.userName;
-	console.log("test" + ", " + userName);
+
 	if(roomName.includes('-')) {
-		console.log("test2");
 		var opponentName = roomName.substring(userName.length+1);
 		var roomName2 = opponentName + '-' + userName;
 		console.log(roomName + ", " + roomName2);
@@ -132,30 +131,27 @@ router.get('/chat/:roomName', function(req, res, next) {
 					arr.push(o);
 				}
 				obj.messages = arr;
-				console.log(arr);
 				res.json(obj);
 			}
 		});
 	}
 	else {
-		console.log("test3");
     	client.query("SELECT * FROM Message WHERE Message.chatRoomName = ?", [roomName], function(err, rows, fields) {
         	if(err) {
-            	console.log(err);
+           		console.log(err);
         	}
         	else {
-            	let obj = new Object();
-            	let arr = [];
-            	for(let i = 0; i < rows.length; i++) {
-                	let o = new Object();
-                	o.sender = rows[i].sender;
-                	o.message = rows[i].message;
-                	o.timeStamp = rows[i].timeStamp;
-                	arr.push(o);
-            	}
-            	obj.messages = arr;
-           		console.log(arr);
-        	    res.json(obj);
+           		let obj = new Object();
+           		let arr = [];
+           		for(let i = 0; i < rows.length; i++) {
+               		let o = new Object();
+               		o.sender = rows[i].sender;
+               		o.message = rows[i].message;
+               		o.timeStamp = rows[i].timeStamp;
+               		arr.push(o);
+           		}
+           		obj.messages = arr;
+        	   	res.json(obj);
     	    }
 	    });
 	}	
