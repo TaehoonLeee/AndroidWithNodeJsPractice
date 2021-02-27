@@ -104,8 +104,12 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             if(it.isEmpty()) {
                 topText.visibility = View.GONE
             }
-
             chatAdapter.setMessages(it)
+        })
+
+        chatViewModel.newMessage.observe(viewLifecycleOwner, Observer {
+            chatViewModel.onGetMessages(args.roomName, args.userName)
+            focusDown(true)
         })
 
         focusDown(true)
@@ -125,32 +129,9 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
 
         (activity as MainActivity).isShowBar(false)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        chatViewModel.closeSocket()
+    }
 }
-
-
-
-//        try {
-//            socket = IO.socket("http://10.0.2.2:3001/")
-//        } catch (e : Exception) { e.printStackTrace() }
-//
-//        socket.connect()
-//        socket.on(Socket.EVENT_CONNECT, Emitter.Listener {
-//            socket.emit("first")
-//        })
-
-//        socket.on("first", Emitter.Listener {
-//            val jsonArray = it[0] as JSONArray
-//            repeat(jsonArray.length()) { index ->
-//                val jsonObject = jsonArray[index] as JSONObject
-//                val sender = jsonObject.getString("sender")
-//                val message = jsonObject.getString("message")
-//                val timeStamp = jsonObject.getString("timeStamp")
-//                firstMessageList.add(Message(sender, message, timeStamp))
-//                Log.e("By server", "Data is ${jsonObject.getString("message")}")
-//            }
-//        })
-
-//        repeat(firstMessageList.size) {
-//            Log.e("ActivityCreated", firstMessageList[it].timeStamp)
-//        }
-//        chatAdapter.setMessages(firstMessageList)

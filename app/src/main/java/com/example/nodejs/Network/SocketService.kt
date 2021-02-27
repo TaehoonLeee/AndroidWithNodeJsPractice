@@ -1,54 +1,73 @@
 package com.example.nodejs.Network
 
 import android.util.Log
-import com.example.nodejs.Model.MessageJsonAdapter
-import com.squareup.moshi.Moshi
+import com.example.nodejs.Network.listener.EventListener
+import com.example.nodejs.Util.BaseObservable
+import io.reactivex.rxjava3.core.Single
+import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
+import org.json.JSONObject
+import java.net.URISyntaxException
 
-class SocketService {
+class SocketService : BaseObservable<EventListener>(){
 
-    private val TAG = this.javaClass.simpleName
-    private val SOCKET_URL = "https://10.0.2.2:3000/"
+    private val SOCKET_URL = "http://10.0.2.2:3001/"
     private val EVENT_CONNECT = Socket.EVENT_CONNECT
-    private val EVENT_RECONNECT = Socket.EVENT_RECONNECT
     private val EVENT_DISCONNECT = Socket.EVENT_DISCONNECT
-    private val EVENT_CONNECT_ERROR = Socket.EVENT_CONNECT_ERROR
+    private val EVENT_UPDATECHAT = "updateChat"
+    private val EVENT_NEWMESSAGE = "newMessage"
 
     lateinit var socket : Socket
     lateinit var userName : String
     lateinit var roomName : String
 
-    private val connectListener : Emitter.Listener = Emitter.Listener {
-        Log.e(TAG, "onConnect...")
-        socket.emit("Add user", userName, roomName)
+    private val onConnectListener = Emitter.Listener {
+        Log.e("Socket Service ", "onConnectListener")
+        socket.emit("enter", JSONObject("{\"userName\":\"${userName}\", \"roomName\":\"${roomName}\"}"))
+        getListeners().forEachIndexed { _, eventListener ->
+            eventListener.onConnect()
+        }
     }
 
-    private val reconnectListener : Emitter.Listener = Emitter.Listener {
-        Log.e(TAG, "onReconnect...")
+    private val onUpdateChatListener = Emitter.Listener {
+        Log.e("Socket Service : UpdateChat", it[0] as String)
+        Log.e("Socket Service : UpdateChat", "test")
+        getListeners().forEachIndexed { _, eventListener ->
+            eventListener.onUpdateChat(it[0] as String)
+        }
     }
 
-    private val connectionErrorListener : Emitter.Listener = Emitter.Listener {
-        Log.e(TAG, "onConnectionError...")
-    }
-
-    private val disconnectListener : Emitter.Listener = Emitter.Listener {
-        Log.e(TAG, "onDisconnect...")
+    private val onDisconnectListener = Emitter.Listener {
         socket.off()
+        getListeners().forEachIndexed { _, eventListener ->
+            eventListener.onDisconnect()
+        }
     }
 
-    private val newMessageListener : Emitter.Listener = Emitter.Listener {
-        val rawMessage = it[0].toString()
-        Log.e(TAG, "onMessage: $rawMessage")
-        try {
-            val currentTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("h:mm a")
-            val formatted = currentTime.format(formatter)
-            val adapter = MessageJsonAdapter(moshi = Moshi.Builder().build())
+    fun startListening(userName : String, roomName : String) {
+        Log.e("SocketService", "onStartListening")
+        this.userName = userName
+        this.roomName = roomName
 
-        } catch (e:Exception) {e.printStackTrace()}
+        try {
+            socket = IO.socket(SOCKET_URL)
+        } catch (e : URISyntaxException) { e.printStackTrace() }
+
+        socket.on(EVENT_CONNECT, onConnectListener)
+        socket.on(EVENT_UPDATECHAT, onUpdateChatListener)
+        socket.on(EVENT_DISCONNECT, onDisconnectListener)
+        socket.connect()
+    }
+
+    fun stopListening() {
+        socket?.let { it.disconnect() }
+    }
+
+    fun sendMessage(roomName : String, message : String) : Single<String> {
+        return Single.create {
+            socket.emit(EVENT_NEWMESSAGE, JSONObject("{\"message\":\"${message}\", \"roomName\":\"${roomName}\"}"))
+            it.onSuccess(message)
+        }
     }
 }

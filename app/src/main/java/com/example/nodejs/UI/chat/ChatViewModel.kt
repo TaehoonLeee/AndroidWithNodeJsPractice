@@ -5,25 +5,20 @@ import android.view.View
 import android.widget.ScrollView
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.nodejs.Model.Friend
 import com.example.nodejs.Model.Message
 import com.example.nodejs.Model.Res_Message
 import com.example.nodejs.Repository.NodeRepository
+import com.example.nodejs.Repository.SocketRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.socket.client.IO
-import io.socket.client.Socket
-import io.socket.emitter.Emitter
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ChatViewModel @ViewModelInject constructor(
     private val nodeRepository: NodeRepository,
+    private val socketRepository: SocketRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
@@ -33,30 +28,20 @@ class ChatViewModel @ViewModelInject constructor(
     private val _friendList = MutableLiveData<List<Friend>>()
     val friendList : LiveData<List<Friend>> = _friendList
 
-    private lateinit var socket: Socket
+    val newMessage : LiveData<String>
+
     private var roomName : String = savedStateHandle.get<String>("roomName")!!
     private var userName : String = savedStateHandle.get<String>("userName")!!
 
     init {
-        try {
-            socket = IO.socket("http://10.0.2.2:3001/")
-        } catch (e : Exception) { e.printStackTrace() }
-
-        socket.connect()
-        socket.on(Socket.EVENT_CONNECT, Emitter.Listener {
-            socket.emit("enter", JSONObject("{\"userName\":\"${userName}\", \"roomName\":\"${roomName}\"}"))
-        })
-        socket.on("updateChat", Emitter.Listener {
-            Log.e("Socket Service : UpdateChat", it[0] as String)
-            Log.e("Socket Service : UpdateChat", "test")
-            onGetMessages(it[0] as String, userName)
-        })
+        socketRepository.startListening(userName, roomName)
+        newMessage = socketRepository.newMessage
 
         onGetMessages(roomName, userName)
         onGetRelationship(userName)
     }
 
-    private fun onGetMessages(userName : String, roomName : String) {
+    fun onGetMessages(userName : String, roomName : String) {
         nodeRepository.getMessages(roomName, userName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe{ messages -> _messages.value = messages.messages }
@@ -82,7 +67,7 @@ class ChatViewModel @ViewModelInject constructor(
             override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {
                 if (response.isSuccessful) {
                     onCallbackGetMessages(roomName, sender, scrollView)
-                    socket.emit("newMessage", roomName)
+                    socketRepository.sendMessage(roomName, message)
                 }
             }
         })
@@ -92,5 +77,9 @@ class ChatViewModel @ViewModelInject constructor(
         nodeRepository.getFriends(userName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe{ friends -> _friendList.value = friends.friends }
+    }
+
+    fun closeSocket() {
+        socketRepository.stopListening()
     }
 }
