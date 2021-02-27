@@ -24,10 +24,12 @@ class NodeRepository @Inject constructor(
 
     fun getChatList(name : String) : Single<ChatList> {
         return nodeService.getChatList(name)
+            .subscribeOn(Schedulers.io())
     }
 
     fun getAllChatList(name : String) : Single<ChatList> {
         return nodeService.getAllChatList(name)
+            .subscribeOn(Schedulers.io())
     }
 
     fun enterRoom(userName : String, roomName : String) : Call<Res_Message> {
@@ -40,6 +42,7 @@ class NodeRepository @Inject constructor(
 
     fun getChatMemebers(roomName : String) : Single<Members> {
         return nodeService.getChatMembers(roomName)
+            .subscribeOn(Schedulers.io())
     }
 
     fun createMember(userName : String) : Call<Res_Message> {
@@ -48,10 +51,12 @@ class NodeRepository @Inject constructor(
 
     fun getFriends(userName : String) : Single<Friends> {
         return nodeService.getFriends(userName)
+            .subscribeOn(Schedulers.io())
     }
 
     fun getFriendCandidate(regex : String, userName : String) : Single<Friends> {
         return nodeService.getFriendCandidate(regex, userName)
+            .subscribeOn(Schedulers.io())
     }
 
     fun addFriend(myName : String, userName : String) : Call<Res_Message> {

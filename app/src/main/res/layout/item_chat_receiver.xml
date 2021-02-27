@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/standard_quarter"
+    android:paddingEnd="@dimen/standard_full"
+    android:paddingStart="@dimen/standard_half"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/chatReceiverImage"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
         tools:ignore="ContentDescription"
         tools:src="@tools:sample/avatars"/>
 <LinearLayout
@@ -18,13 +20,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginBottom="@dimen/standard_quarter">
+    android:layout_marginStart="@dimen/standard_quarter">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="@dimen/standard_quarter">
+        android:layout_margin="@dimen/standard_quarter"
+        android:paddingBottom="@dimen/standard_quarter">
 
         <TextView
             android:id="@+id/receiverName"
@@ -41,24 +44,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+        <TextView
+            android:id="@+id/txtReceiverMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/chat_receiver_bubble">
-
-            <TextView
-                android:id="@+id/txtReceiverMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
-                android:layout_marginStart="@dimen/standard_full"
-                android:layout_marginEnd="@dimen/standard_quarter"
-                android:padding="@dimen/standard_quarter"
-                android:maxWidth="300sp"
-                tools:text="@tools:sample/lorem/random"
-                tools:maxLines="2"/>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:background="@drawable/chat_receiver_bubble"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="@dimen/standard_full"
+            android:elevation="2dp"
+            android:maxWidth="290dp"
+            tools:text="@tools:sample/lorem/random"
+            tools:maxLines="2"/>
 
         <TextView
             android:id="@+id/txtReceiverDateTime"
