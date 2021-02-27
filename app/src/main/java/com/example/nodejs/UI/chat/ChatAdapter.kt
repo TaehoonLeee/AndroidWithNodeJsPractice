@@ -1,11 +1,13 @@
 package com.example.nodejs.UI.chat
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.example.nodejs.Model.Friend
 import com.example.nodejs.Model.Message
 import com.example.nodejs.R
 import com.example.nodejs.UI.profile.ProfileFragmentDirections
@@ -13,7 +15,7 @@ import com.example.nodejs.glide.GlideApp
 import kotlinx.android.synthetic.main.item_chat_receiver.view.*
 import kotlinx.android.synthetic.main.item_chat_sender.view.*
 
-class ChatAdapter(val name : String) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+class ChatAdapter(val name : String, val onProfileClcik : (Friend) -> Unit) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     private var messages : List<Message> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -58,9 +60,7 @@ class ChatAdapter(val name : String) : RecyclerView.Adapter<ChatAdapter.ChatView
                         txtReceiverDateTime.text = message.timeStamp
 
                         chatReceiverImage.setOnClickListener {
-                            val direction =
-                                ProfileFragmentDirections.actionGlobalProfileFragment(message.sender, true)
-                            findNavController().navigate(direction)
+                            onProfileClcik(Friend(message.sender))
                         }
                     }
                     SENDER -> {

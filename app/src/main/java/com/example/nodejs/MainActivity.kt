@@ -42,10 +42,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<BottomNavigationView>(R.id.navigation_bar).setupWithNavController(navController)
 
         findNavController(R.id.nav_host_fragment).addOnDestinationChangedListener { _, destination, _ ->
-            Log.e("MainActivity", "${destination.id}")
-            Log.e("MainActivity", "R.id.FreindsFragment : ${R.id.friendsFragment}")
-            Log.e("MainActivity", "R.id.addFriendFragment : ${R.id.addFriendFragment}")
-            Log.e("MainActivity", "R.id.chatRoomFragment : ${R.id.chatRoomFragment}")
             when(destination.id) {
                 R.id.friendsFragment -> {}
                 R.id.chatRoomFragment -> {}
