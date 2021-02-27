@@ -52,33 +52,31 @@ let client = mysql.createConnection({
 })
 
 io.sockets.on('connection', function(socket) {
+	var userName = '';
 	console.log('Connectioned!');
-
-//	client.query("SELECT * FROM testMessage;", function(err, rows, cols) {
-//		if(err) {
-//			console.log(err);
-//		}
-//		else {
-//			console.log(rows);
-//			socket.emit('first', rows);
-//		}
-//	});		
 	
-	socket.on('chat', function(data) {
-		console.log(data)
+	socket.on('enter', function(data) {
+		const jsonData = JSON.parse(JSON.stringify(data));
+		var userName = jsonData.userName;
+		var roomName = jsonData.roomName;
+		socket.join(`${roomName}`)
+		console.log(`Username : ${userName} joined Room name : ${roomName}`)
 	});
-
-	socket.on('first', function() {
-		client.query("SELECT * FROM testMessage;", function(err, rows, cols) {
-			if(err) {
-				console.log(err);
-			}
-			else {
-				console.log(rows);
-				socket.emit('first', rows);
-			}
-		});
-	});	
+	socket.on('newMessage', function(data) {
+		console.log('New message is received');
+		console.log(`Room Name : ${data}`);
+		socket.broadcast.to(`${data}`).emit('updateChat', `${data}`);
+	});
+	socket.on('quit', function(data) {
+		console.log('A user quit.');
+		const jsonData = JSON.parse(JSON.stringify(data));
+		var userName = jsonData.userName;
+		var roomName = jsonData.roomName;
+		socket.leave(`${roomName}`);
+	});
+	socket.on('disconnect', function() {
+		console.log('One of sockets disconnected.');
+	});
 });
 
 /**
