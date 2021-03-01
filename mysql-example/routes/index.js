@@ -307,21 +307,17 @@ router.get('/fcmsend', async function(req, res, next) {
 	var sender_message = req.query.message;
 	var roomName = req.query.roomName;
 
-	var query = "SELECT token FROM Person WHERE name=(SELECT userName FROM chatRoomJoin WHERE roomName=? AND userName<>?)";
+	var query = "SELECT name, token FROM Person WHERE name=(SELECT userName FROM chatRoomJoin WHERE roomName=? AND userName<>?)";
 	var queryRes = await getResult3(query, roomName, sender);
-	var target_token = queryRes[0].token; 
+	var target_token = queryRes[0].token;
+	var userName = queryRes[0].name; 
 	
-	console.log('token : ', target_token);
-	//let target_token = 'dC8l3Y-VQmC2xokZRBi9KB:APA91bE8hJb2JSM59Rjb83urj7euWTG3v7SXO69N8uepXxu6jY1DeH56M3GwI31rVyIn5X7PTptk_u8d-CgTd5odewIreVTIa08dDfU0MTZyG3dNIyfNalVdGjtLR1OqkLN_p5OKc5c5';
 	let message = {
-		notification: {
-			title: sender,
-			body: sender_message
-		},
 		data: {
-			sender: 'testSender',
-			message: 'testMessage',
-			roomName: 'testRoomName',
+			sender: sender,
+			message: sender_message,
+			roomName: roomName,
+			userName: userName,
 		},
 		token: target_token,
 	}
