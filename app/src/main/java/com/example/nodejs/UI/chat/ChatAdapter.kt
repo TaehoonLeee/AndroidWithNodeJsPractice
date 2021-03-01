@@ -15,7 +15,10 @@ import com.example.nodejs.glide.GlideApp
 import kotlinx.android.synthetic.main.item_chat_receiver.view.*
 import kotlinx.android.synthetic.main.item_chat_sender.view.*
 
-class ChatAdapter(val name : String, val onProfileClcik : (Friend) -> Unit) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+class ChatAdapter(
+    val name : String,
+    val onProfileClcik : (Friend) -> Unit
+) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     private var messages : List<Message> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {

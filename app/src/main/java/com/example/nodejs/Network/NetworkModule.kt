@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import io.socket.client.Socket
 import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -89,4 +90,15 @@ object NetworkModule {
         return retrofit.create(NodeService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideSocketService() : SocketService {
+        return SocketService()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFcmService(retrofit: Retrofit) : FcmService {
+        return retrofit.create(FcmService::class.java)
+    }
 }
