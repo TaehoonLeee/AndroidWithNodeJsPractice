@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.MainActivity
 import com.example.nodejs.R
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.friends_fragment.*
 import kotlinx.android.synthetic.main.search_layout.*
@@ -27,6 +29,16 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
 
         userName = (activity as MainActivity).getUserName()
         friendsViewModel.onGetFriends(userName)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if(!it.isSuccessful) {
+                Log.e("FirebaseMessaging", it.exception!!.message!!)
+                return@addOnCompleteListener
+            }
+
+            val token = it.result
+            (activity as MainActivity).setToken(token!!)
+            Log.e("FirebaseMessaging", "Token : $token")
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -55,8 +55,9 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             val currentTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("h:mm a")
             val formatted = currentTime.format(formatter)
+            val token = (activity as MainActivity).getToken()
 
-            chatViewModel.addMessage(userName, msgToSend.text.toString(), formatted, roomName, chatScrollView)
+            chatViewModel.addMessage(userName, msgToSend.text.toString(), formatted, roomName, chatScrollView, token)
             msgToSend.text = null
         }
 

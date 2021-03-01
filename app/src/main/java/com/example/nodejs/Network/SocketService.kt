@@ -12,12 +12,6 @@ import java.net.URISyntaxException
 
 class SocketService : BaseObservable<EventListener>(){
 
-    private val SOCKET_URL = "http://10.0.2.2:3001/"
-    private val EVENT_CONNECT = Socket.EVENT_CONNECT
-    private val EVENT_DISCONNECT = Socket.EVENT_DISCONNECT
-    private val EVENT_UPDATECHAT = "updateChat"
-    private val EVENT_NEWMESSAGE = "newMessage"
-
     lateinit var socket : Socket
     lateinit var userName : String
     lateinit var roomName : String
@@ -32,7 +26,6 @@ class SocketService : BaseObservable<EventListener>(){
 
     private val onUpdateChatListener = Emitter.Listener {
         Log.e("Socket Service : UpdateChat", it[0] as String)
-        Log.e("Socket Service : UpdateChat", "test")
         getListeners().forEachIndexed { _, eventListener ->
             eventListener.onUpdateChat(it[0] as String)
         }
@@ -69,5 +62,14 @@ class SocketService : BaseObservable<EventListener>(){
             socket.emit(EVENT_NEWMESSAGE, JSONObject("{\"message\":\"${message}\", \"roomName\":\"${roomName}\"}"))
             it.onSuccess(message)
         }
+    }
+
+    companion object {
+        private const val SOCKET_URL = "http://10.0.2.2:3001/"
+        private const val EVENT_CONNECT = Socket.EVENT_CONNECT
+        private const val EVENT_DISCONNECT = Socket.EVENT_DISCONNECT
+        private const val EVENT_UPDATECHAT = "updateChat"
+        private const val EVENT_NEWMESSAGE = "newMessage"
+
     }
 }

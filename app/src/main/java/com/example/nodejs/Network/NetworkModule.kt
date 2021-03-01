@@ -95,4 +95,10 @@ object NetworkModule {
     fun provideSocketService() : SocketService {
         return SocketService()
     }
+
+    @Singleton
+    @Provides
+    fun provideFcmService(retrofit: Retrofit) : FcmService {
+        return retrofit.create(FcmService::class.java)
+    }
 }

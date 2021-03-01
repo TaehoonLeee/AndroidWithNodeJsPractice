@@ -6,11 +6,12 @@ import android.widget.ScrollView
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.nodejs.Model.Friend
-import com.example.nodejs.Model.Message
-import com.example.nodejs.Model.Res_Message
+import com.example.nodejs.MainActivity
+import com.example.nodejs.Model.*
+import com.example.nodejs.Repository.FcmRepository
 import com.example.nodejs.Repository.NodeRepository
 import com.example.nodejs.Repository.SocketRepository
+import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +20,7 @@ import retrofit2.Response
 class ChatViewModel @ViewModelInject constructor(
     private val nodeRepository: NodeRepository,
     private val socketRepository: SocketRepository,
+    private val fcmRepository: FcmRepository,
     @Assisted private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
@@ -58,7 +60,7 @@ class ChatViewModel @ViewModelInject constructor(
                 }
     }
 
-    fun addMessage(sender : String, message : String, timeStamp : String, roomName : String, scrollView : ScrollView) {
+    fun addMessage(sender : String, message : String, timeStamp : String, roomName : String, scrollView : ScrollView, token : String) {
         nodeRepository.addMessage(sender, message, timeStamp, roomName).enqueue(object : Callback<Res_Message> {
             override fun onFailure(call: Call<Res_Message>, t: Throwable) {
                 Log.e("ChatViewModel", t.message!!)
@@ -68,12 +70,25 @@ class ChatViewModel @ViewModelInject constructor(
                 if (response.isSuccessful) {
                     onCallbackGetMessages(roomName, sender, scrollView)
                     socketRepository.sendMessage(roomName, message)
+                    fcmRepository.sendNotification(sender, message, roomName).enqueue(object : Callback<Res_Message> {
+                        override fun onFailure(call: Call<Res_Message>, t: Throwable) {
+
+                        }
+
+                        override fun onResponse(
+                            call: Call<Res_Message>,
+                            response: Response<Res_Message>
+                        ) {
+                            if(response.isSuccessful) Log.e("FirebaseMessaging", "FCM sendNoti Success")
+                        }
+
+                    })
                 }
             }
         })
     }
 
-    fun onGetRelationship(userName : String) {
+    private fun onGetRelationship(userName : String) {
         nodeRepository.getFriends(userName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe{ friends -> _friendList.value = friends.friends }

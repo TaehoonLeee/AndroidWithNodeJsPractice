@@ -58,7 +58,14 @@ class MainActivity : AppCompatActivity() {
         userName = _userName
     }
 
+    fun getToken() : String = token
+
+    fun setToken(_token : String) {
+        token = _token
+    }
+
     companion object {
         private var userName = ""
+        private var token = ""
     }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "661948189205",
+    "project_id": "nodejs-556bd",
+    "storage_bucket": "nodejs-556bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661948189205:android:793282617dcf63d20d5c1c",
+        "android_client_info": {
+          "package_name": "com.example.nodejs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "661948189205-2joav860ebkcdcu7246uf7u414ebs6qe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqdNVDMMra_AYExIPi2jU_lEx_c-BO620"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "661948189205-2joav860ebkcdcu7246uf7u414ebs6qe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
