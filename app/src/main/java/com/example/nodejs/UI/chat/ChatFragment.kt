@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.view.isNotEmpty
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
@@ -28,7 +29,6 @@ import java.time.format.DateTimeFormatter
 @AndroidEntryPoint
 class ChatFragment : Fragment(R.layout.chat_fragment) {
 
-    private lateinit var socket: Socket
     private val chatViewModel : ChatViewModel by viewModels<ChatViewModel>()
     private lateinit var chatAdapter : ChatAdapter
     private val args : ChatFragmentArgs by navArgs()
@@ -85,13 +85,13 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
         // 채팅 뷰 하단으로 내리기
         when(isStart) {
             true -> {
-                chatScrollView.postDelayed ({
-                    chatScrollView.fullScroll(View.FOCUS_DOWN)
-                }, 1000)
+                chatScrollView?.let {
+                    it.fullScroll(View.FOCUS_DOWN)
+                }
             }
             false -> {
-                chatScrollView.post {
-                    chatScrollView.fullScroll(View.FOCUS_DOWN)
+                chatScrollView?.let {
+                    it.fullScroll(View.FOCUS_DOWN)
                 }
             }
         }
