@@ -12,7 +12,7 @@ import com.example.nodejs.R
 import com.example.nodejs.glide.GlideApp
 import kotlinx.android.synthetic.main.item_chat_room.view.*
 
-class ChatRoomAdapter(val userName : String) : RecyclerView.Adapter<ChatRoomAdapter.ChatRoomViewHolder>() {
+class ChatRoomAdapter(val userName : String, val onClickExit : (ChatRoom) -> Unit) : RecyclerView.Adapter<ChatRoomAdapter.ChatRoomViewHolder>() {
 
     private var chatList : List<ChatRoom> = listOf()
 
@@ -51,7 +51,10 @@ class ChatRoomAdapter(val userName : String) : RecyclerView.Adapter<ChatRoomAdap
 
     inner class ChatRoomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         fun bind(chatRoom : ChatRoom) {
-            itemView.setOnClickListener {
+            itemView.btnExit.setOnClickListener {
+                onClickExit(chatRoom)
+            }
+            itemView.swipeView.setOnClickListener {
                 val direction =
                     ChatRoomFragmentDirections.actionChatRoomFragmentToChatFragment(userName, chatRoom.name)
                 it.findNavController().navigate(direction)

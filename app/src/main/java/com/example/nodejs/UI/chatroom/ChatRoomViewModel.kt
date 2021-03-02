@@ -30,4 +30,8 @@ class ChatRoomViewModel @ViewModelInject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { chatList -> _chatList.value = chatList.chatRoomList }
     }
+
+    fun exitRoom(chatRoom: ChatRoom) {
+
+    }
 }

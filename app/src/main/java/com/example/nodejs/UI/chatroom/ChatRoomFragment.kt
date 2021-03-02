@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.MainActivity
 import com.example.nodejs.R
+import com.example.nodejs.Util.SwipeHelperCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat_room.*
 import kotlinx.android.synthetic.main.search_layout.*
@@ -33,11 +35,22 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatRoomAdapter = ChatRoomAdapter(userName)
+        chatRoomAdapter = ChatRoomAdapter(userName, {
+            chatRoomViewModel.exitRoom(it)
+        })
 
+        val swipeHelperCallback = SwipeHelperCallback().apply {
+            setClamp(300f)
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHelperCallback)
+        itemTouchHelper.attachToRecyclerView(rvChatList)
         rvChatList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = chatRoomAdapter
+            setOnTouchListener { _, _ ->
+                swipeHelperCallback.removePreviousClamp(this)
+                false
+            }
         }
 
         searchView.maxWidth = Int.MAX_VALUE

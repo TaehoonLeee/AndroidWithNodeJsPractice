@@ -14,6 +14,7 @@ import com.example.nodejs.R
 import com.example.nodejs.UI.SharedUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.setting_fragment.*
 
 @AndroidEntryPoint
 class SettingFragment : Fragment(R.layout.setting_fragment) {
@@ -25,6 +26,14 @@ class SettingFragment : Fragment(R.layout.setting_fragment) {
 
         userName  = (activity as MainActivity).getUserName()
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        myName.text = userName
+        myEmail.text = "lyc9290@gmail.com"
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

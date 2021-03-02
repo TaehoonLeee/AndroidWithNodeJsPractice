@@ -17,7 +17,6 @@
             android:id="@+id/chatRoomToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:menu="@menu/chat_room_menu"
             app:title="ChatRoom"/>
 
