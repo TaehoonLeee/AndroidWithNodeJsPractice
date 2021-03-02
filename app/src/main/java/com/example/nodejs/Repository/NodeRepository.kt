@@ -62,4 +62,8 @@ class NodeRepository @Inject constructor(
     fun addFriend(myName : String, userName : String) : Call<Res_Message> {
         return nodeService.addFriend(myName, userName)
     }
+
+    fun exitRoom(userName: String, roomName: String) : Call<Res_Message> {
+        return nodeService.exitRoom(userName, roomName)
+    }
 }

@@ -57,4 +57,10 @@ interface NodeService {
     fun addFriend(
         @Field("myName") myName : String,
         @Field("userName") userName : String) : Call<Res_Message>
+
+    @FormUrlEncoded
+    @POST("/exit")
+    fun exitRoom(
+        @Field("userName") userName: String,
+        @Field("roomName") roomName: String) : Call<Res_Message>
 }

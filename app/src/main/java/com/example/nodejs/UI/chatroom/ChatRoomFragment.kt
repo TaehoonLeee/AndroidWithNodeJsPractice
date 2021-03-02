@@ -36,7 +36,7 @@ class ChatRoomFragment : Fragment(R.layout.fragment_chat_room) {
         super.onViewCreated(view, savedInstanceState)
 
         chatRoomAdapter = ChatRoomAdapter(userName, {
-            chatRoomViewModel.exitRoom(it)
+            chatRoomViewModel.exitRoom(userName, it)
         })
 
         val swipeHelperCallback = SwipeHelperCallback().apply {
