@@ -25,9 +25,9 @@
     - 채팅방 나가기
   - 계정 관리  
     - 이름, email 변경  
-  - 알림 관리  
-    - 실시간 메세지 도착 알림  
-    - Notification 클릭 시 해당 채팅방 이동  
+  - [알림 관리](#알림-관리)  
+    - [실시간 메세지 도착 알림](#실시간-메세지-도착-알림)  
+    - [Notification 클릭 시 해당 채팅방 이동](#Notification-클릭-시-해당-채팅방-이동)  
     
 ## 개발 환경
 ### 사용 프레임워크  
@@ -60,4 +60,12 @@
 ### 채팅 관리
 #### 실시간 채팅  
 ![realtime chat](https://user-images.githubusercontent.com/48707020/110809248-10b06d80-82c8-11eb-834e-7dd94fd65825.gif)  
-- socket.io 통신을 이용한 실시간 채팅과 multer, cloudinary를 이용한 이미지 주고 
+- socket.io 통신을 이용한 실시간 채팅과 multer, cloudinary를 이용한 이미지 주고 받기  
+
+### 알림 관리
+#### 실시간 메세지 도착 알림
+![noti](https://user-images.githubusercontent.com/48707020/110811202-d47e0c80-82c9-11eb-9e0f-10613c20750b.gif)  
+- FCM을 통하여 실시간 메세지 도착 알림 구현  
+
+#### Notification 클릭 시 해당 채팅방 이동  
+![click noti](https://user-images.githubusercontent.com/48707020/110811362-fa0b1600-82c9-11eb-8c19-fd81b9b8275d.gif)
