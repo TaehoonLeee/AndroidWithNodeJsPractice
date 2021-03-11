@@ -13,9 +13,13 @@ import com.example.nodejs.Repository.NodeRepository
 import com.example.nodejs.Repository.SocketRepository
 import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ChatViewModel @ViewModelInject constructor(
     private val nodeRepository: NodeRepository,
@@ -82,6 +86,33 @@ class ChatViewModel @ViewModelInject constructor(
                             if(response.isSuccessful) Log.e("FirebaseMessaging", "FCM sendNoti Success")
                         }
 
+                    })
+                }
+            }
+        })
+    }
+
+    fun uploadeImage(image : MultipartBody.Part, name : RequestBody,
+                     sender : RequestBody, roomName : RequestBody,
+                     timeStamp : RequestBody, scrollView: ScrollView) {
+
+        nodeRepository.uploadImage(image, name, sender, roomName, timeStamp).enqueue(object : Callback<Res_Message> {
+            override fun onFailure(call: Call<Res_Message>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {
+                if(response.isSuccessful) {
+                    onCallbackGetMessages(this@ChatViewModel.roomName, userName, scrollView)
+                    socketRepository.sendMessage(this@ChatViewModel.roomName, "upload image")
+                    fcmRepository.sendNotification(userName, "send Image", this@ChatViewModel.roomName).enqueue(object : Callback<Res_Message> {
+                        override fun onFailure(call: Call<Res_Message>, t: Throwable) {
+
+                        }
+
+                        override fun onResponse(call: Call<Res_Message>, response: Response<Res_Message>) {
+
+                        }
                     })
                 }
             }

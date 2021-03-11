@@ -63,31 +63,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp">
-        <EditText
-            android:id="@+id/msgToSend"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:autofillHints="@string/chat"
-            android:background="@drawable/edit_round"
-            android:backgroundTint="#EEEAEAEA"
-            android:hint="@string/send_message"
-            android:textColorHint="@android:color/white"
-            android:inputType="text"
-            android:padding="@dimen/standard_half"
-            android:textSize="14sp"
-            android:layout_marginStart="@dimen/standard_quarter"
-            android:layout_marginEnd="@dimen/standard_quarter"
-            android:layout_marginBottom="@dimen/standard_half"
-            android:layout_marginTop="@dimen/standard_quarter"/>
 
-        <ImageButton
-            android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/round_button"
-            android:contentDescription="@string/send_button"
-            android:src="@drawable/ic_baseline_arrow_circle_up_24" />
+            <ImageView
+                android:id="@+id/captureImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/standard_quarter"
+                android:src="@drawable/ic_baseline_camera_alt_24" />
+
+            <ImageView
+                android:id="@+id/pickImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/standard_quarter"
+                android:src="@drawable/ic_baseline_image_24" />
+            
+            <EditText
+                android:id="@+id/msgToSend"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:autofillHints="@string/chat"
+                android:background="@drawable/edit_round"
+                android:backgroundTint="#EEEAEAEA"
+                android:hint="@string/send_message"
+                android:textColorHint="@android:color/white"
+                android:inputType="text"
+                android:padding="@dimen/standard_half"
+                android:textSize="14sp"
+                android:layout_marginStart="@dimen/standard_quarter"
+                android:layout_marginEnd="@dimen/standard_quarter"
+                android:layout_marginBottom="@dimen/standard_half"
+                android:layout_marginTop="@dimen/standard_quarter"/>
+    
+            <ImageButton
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/round_button"
+                android:contentDescription="@string/send_button"
+                android:src="@drawable/ic_baseline_arrow_circle_up_24" />
         </LinearLayout>
     </LinearLayout>
 

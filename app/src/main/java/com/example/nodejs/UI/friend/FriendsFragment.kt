@@ -88,16 +88,12 @@ class FriendsFragment : Fragment(R.layout.friends_fragment) {
         super.onActivityCreated(savedInstanceState)
         (activity as MainActivity).isShowBar(true)
         friendsViewModel.friends.observe(viewLifecycleOwner, Observer {
-            it.forEachIndexed { _, friend ->
-                Log.e("Friends", (friend.name))
-            }
             friendAdapter.setFriends(it)
         })
     }
 
     override fun onResume() {
         super.onResume()
-        Log.e("Friends", "onResume")
         friendsViewModel.onGetFriends(userName)
     }
 }

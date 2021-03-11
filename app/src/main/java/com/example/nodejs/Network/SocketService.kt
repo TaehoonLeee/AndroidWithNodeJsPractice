@@ -17,7 +17,6 @@ class SocketService : BaseObservable<EventListener>(){
     lateinit var roomName : String
 
     private val onConnectListener = Emitter.Listener {
-        Log.e("Socket Service ", "onConnectListener")
         socket.emit("enter", JSONObject("{\"userName\":\"${userName}\", \"roomName\":\"${roomName}\"}"))
         getListeners().forEachIndexed { _, eventListener ->
             eventListener.onConnect()
@@ -25,7 +24,6 @@ class SocketService : BaseObservable<EventListener>(){
     }
 
     private val onUpdateChatListener = Emitter.Listener {
-        Log.e("Socket Service : UpdateChat", it[0] as String)
         getListeners().forEachIndexed { _, eventListener ->
             eventListener.onUpdateChat(it[0] as String)
         }
@@ -38,8 +36,13 @@ class SocketService : BaseObservable<EventListener>(){
         }
     }
 
+    private val onSendImageListener = Emitter.Listener {
+        getListeners().forEachIndexed { _, eventListener ->
+            eventListener.onSendImage()
+        }
+    }
+
     fun startListening(userName : String, roomName : String) {
-        Log.e("SocketService", "onStartListening")
         this.userName = userName
         this.roomName = roomName
 
@@ -50,6 +53,7 @@ class SocketService : BaseObservable<EventListener>(){
         socket.on(EVENT_CONNECT, onConnectListener)
         socket.on(EVENT_UPDATECHAT, onUpdateChatListener)
         socket.on(EVENT_DISCONNECT, onDisconnectListener)
+        socket.on(EVENT_SENDIMAGE, onSendImageListener)
         socket.connect()
     }
 
@@ -70,6 +74,7 @@ class SocketService : BaseObservable<EventListener>(){
         private const val EVENT_DISCONNECT = Socket.EVENT_DISCONNECT
         private const val EVENT_UPDATECHAT = "updateChat"
         private const val EVENT_NEWMESSAGE = "newMessage"
+        private const val EVENT_SENDIMAGE = "sendImage"
 
     }
 }

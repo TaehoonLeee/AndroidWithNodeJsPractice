@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.nodejs.Model.Friend
 import com.example.nodejs.Model.Message
 import com.example.nodejs.R
@@ -59,7 +61,19 @@ class ChatAdapter(
                             .thumbnail(0.1f)
                             .into(chatReceiverImage)
                         receiverName.text = message.sender
-                        txtReceiverMessage.text = message.message
+                        if(message.category == "txt") {
+                            txtReceiverMessage.visibility = View.VISIBLE
+                            imgReceiverMessage.visibility = View.GONE
+                            txtReceiverMessage.text = message.message
+                        }
+                        else {
+                            imgReceiverMessage.visibility = View.VISIBLE
+                            txtReceiverMessage.visibility = View.GONE
+                            GlideApp.with(imgReceiverMessage)
+                                    .load(message.url)
+                                    .transform(CenterCrop(), RoundedCorners(25))
+                                    .into(imgReceiverMessage)
+                        }
                         txtReceiverDateTime.text = message.timeStamp
 
                         chatReceiverImage.setOnClickListener {
@@ -67,6 +81,19 @@ class ChatAdapter(
                         }
                     }
                     SENDER -> {
+                        if(message.category == "txt") {
+                            txtSenderMessage.visibility = View.VISIBLE
+                            imgSenderMessage.visibility = View.GONE
+                        }
+                        else {
+                            Log.e("Chat Adapter", message.url!!)
+                            imgSenderMessage.visibility = View.VISIBLE
+                            txtSenderMessage.visibility = View.GONE
+                            GlideApp.with(imgSenderMessage)
+                                    .load(message.url)
+                                    .transform(CenterCrop(), RoundedCorners(25))
+                                    .into(imgSenderMessage)
+                        }
                         txtSenderMessage.text = message.message
                         txtSenderDateTime.text = message.timeStamp
                     }

@@ -1,30 +1,31 @@
 package com.example.nodejs.UI.chat
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.core.view.isNotEmpty
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nodejs.MainActivity
-import com.example.nodejs.Model.Friend
 import com.example.nodejs.R
 import com.example.nodejs.UI.profile.ProfileFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import io.socket.client.IO
-import io.socket.client.Socket
-import io.socket.emitter.Emitter
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_fragment.*
-import kotlinx.android.synthetic.main.item_chat_room.view.*
-import org.json.JSONObject
+import java.io.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.lang.StringBuilder
 
 @AndroidEntryPoint
 class ChatFragment : Fragment(R.layout.chat_fragment) {
@@ -79,23 +80,13 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
                 else -> false
             }
         }
-    }
 
-    private fun focusDown(isStart : Boolean) {
-        // 채팅 뷰 하단으로 내리기
-        when(isStart) {
-            true -> {
-                chatScrollView?.let {
-                    it.fullScroll(View.FOCUS_DOWN)
-                }
-            }
-            false -> {
-                chatScrollView?.let {
-                    it.fullScroll(View.FOCUS_DOWN)
-                }
-            }
+        pickImage.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_GET_CONTENT
+            intent.type = "image/*"
+            startActivityForResult(Intent.createChooser(intent, "pick image"), 123)
         }
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -117,7 +108,6 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
         chatScrollView?.viewTreeObserver?.addOnScrollChangedListener {
             if (chatScrollView != null) {
                 val scrollY = chatScrollView.scrollY
-                Log.e("VIEWTREE", scrollY.toString())
                 val totalHeight = chatScrollView.getChildAt(0).height - chatScrollView.height
                 if (totalHeight - scrollY > 200) {
                     focusDownfab.show()
@@ -128,6 +118,17 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             }
         }
 
+        msgToSend.setOnFocusChangeListener { _, selected ->
+            if(selected) {
+                pickImage.visibility = View.GONE
+                captureImage.visibility = View.GONE
+            }
+            else {
+                pickImage.visibility = View.VISIBLE
+                captureImage.visibility = View.VISIBLE
+            }
+        }
+
         (activity as MainActivity).isShowBar(false)
     }
 
@@ -135,4 +136,55 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
         super.onDestroyView()
         chatViewModel.closeSocket()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 123 && resultCode == Activity.RESULT_OK && data!!.data != null) {
+            val fileUri = activity?.contentResolver?.openInputStream(data.data!!)
+
+            val bm = BitmapFactory.decodeStream(fileUri)
+
+            val filesDir = activity?.applicationContext?.filesDir
+            val file = File(filesDir, filesDir?.name + ".png")
+            val bos = ByteArrayOutputStream()
+            bm.compress(Bitmap.CompressFormat.PNG, 0, bos)
+            val bitMapData = bos.toByteArray()
+
+            val fos = FileOutputStream(file)
+            fos.write(bitMapData)
+            fos.flush()
+            fos.close()
+
+            val reqFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("img", file.name, reqFile)
+            val name = "img".toRequestBody("text/plain".toMediaTypeOrNull())
+            val sender = args.userName.toRequestBody("text/plain".toMediaTypeOrNull())
+            val roomName = args.roomName.toRequestBody("text/plain".toMediaTypeOrNull())
+
+            val currentTime = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("h:mm a")
+            val formatted = currentTime.format(formatter).toRequestBody("text/plain".toMediaTypeOrNull())
+            chatViewModel.uploadeImage(body, name, sender, roomName, formatted, chatScrollView)
+        }
+    }
+
+    private fun focusDown(isStart : Boolean) {
+        // 채팅 뷰 하단으로 내리기
+        when(isStart) {
+            true -> {
+                chatScrollView?.let {
+                    it.postDelayed({
+                        it.fullScroll(View.FOCUS_DOWN)
+                    }, 1000)
+                }
+            }
+            false -> {
+                chatScrollView?.let {
+                    it.fullScroll(View.FOCUS_DOWN)
+                }
+            }
+        }
+    }
+
 }

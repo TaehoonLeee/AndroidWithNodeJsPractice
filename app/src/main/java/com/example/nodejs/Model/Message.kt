@@ -15,8 +15,10 @@ data class Messages(
 data class Message(
         val index : Int?,
         val sender : String,
-        val message : String,
-        val timeStamp : String
+        val message : String?,
+        val timeStamp : String,
+        val category : String,
+        val url : String?
 )
 
 @JsonClass(generateAdapter = true)

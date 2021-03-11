@@ -2,6 +2,8 @@ package com.example.nodejs.Network
 
 import com.example.nodejs.Model.*
 import io.reactivex.rxjava3.core.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -63,4 +65,13 @@ interface NodeService {
     fun exitRoom(
         @Field("userName") userName: String,
         @Field("roomName") roomName: String) : Call<Res_Message>
+
+    @Multipart
+    @POST("/uploadImage")
+    fun uploadImage(
+            @Part image : MultipartBody.Part,
+            @Part("img") name : RequestBody,
+            @Part("sender") sender: RequestBody,
+            @Part("roomName") roomName: RequestBody,
+            @Part("timeStamp") timeStamp: RequestBody) : Call<Res_Message>
 }

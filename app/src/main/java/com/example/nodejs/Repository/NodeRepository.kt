@@ -5,6 +5,8 @@ import com.example.nodejs.Model.*
 import com.example.nodejs.Network.NodeService
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -65,5 +67,15 @@ class NodeRepository @Inject constructor(
 
     fun exitRoom(userName: String, roomName: String) : Call<Res_Message> {
         return nodeService.exitRoom(userName, roomName)
+    }
+
+    fun uploadImage(
+            image : MultipartBody.Part,
+            name : RequestBody,
+            sender : RequestBody,
+            roomName: RequestBody,
+            timeStamp: RequestBody
+    ) : Call<Res_Message> {
+        return nodeService.uploadImage(image, name, sender, roomName, timeStamp)
     }
 }

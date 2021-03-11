@@ -20,7 +20,6 @@ class SocketRepository @Inject constructor(
     private val state = MutableLiveData<String>()
 
     fun startListening(userName : String, roomName : String) {
-        Log.e("SocketRepository", "onStartListening")
         socketService.registerListener(this)
         socketService.startListening(userName, roomName)
     }
@@ -47,5 +46,9 @@ class SocketRepository @Inject constructor(
 
     override fun onUpdateChat(message: String) {
         _newMessage.postValue(message)
+    }
+
+    override fun onSendImage() {
+        TODO("Not yet implemented")
     }
 }

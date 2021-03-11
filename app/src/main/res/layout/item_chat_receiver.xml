@@ -56,13 +56,22 @@
             android:paddingHorizontal="@dimen/standard_full"
             android:elevation="2dp"
             android:maxWidth="290dp"
+            android:visibility="gone"
             tools:text="@tools:sample/lorem/random"
             tools:maxLines="2"/>
+
+        <ImageView
+            android:id="@+id/imgReceiverMessage"
+            android:layout_width="250dp"
+            android:layout_height="350dp"
+            android:padding="10dp"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/txtReceiverDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:layout_marginStart="@dimen/standard_half"
             android:layout_gravity="bottom"
             tools:text="@tools:sample/date/hhmm"/>

@@ -21,7 +21,6 @@ class NodeApplication : Application() {
         try {
             Amplify.addPlugin(AWSCognitoAuthPlugin())
             Amplify.configure(applicationContext)
-            Log.e("NodeApplication", "Init Amplify")
         } catch (e: AmplifyException) {
             Log.e("NodeApplication", "Could not init amplify", e)
         }

@@ -7,4 +7,5 @@ interface EventListener {
     fun onDisconnect()
 
     fun onUpdateChat(message : String)
+    fun onSendImage()
 }
