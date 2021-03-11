@@ -9,14 +9,14 @@
 - [개발 환경](#개발-환경)  
   - [사용 프레임워크](#사용-프레임워크)  
   - [사용 라이브러리](#사용-라이브러리)  
-- 세부기능  
-  - 회원 관리  
-    - 회원가입  
-    - 로그인
-  - 친구 관리  
-    - 친구 검색  
-    - 친구 찾기, 추가  
-    - 1:1 채팅하기  
+- [세부기능](#세부-기능)  
+  - [회원 관리](#회원-관리)  
+    - [회원가입](#회원가입)  
+    - [로그인](#로그인)
+  - [친구 관리](#친구-관리)  
+    - [친구 검색](#친구-검색)  
+    - [친구 찾기, 추가](#친구-찾기,-추가)  
+    - [1:1 채팅하기](#1:1-채팅하기)  
   - 채팅 관리  
     - 실시간 채팅  
     - 채팅방 검색, 추가    
@@ -36,5 +36,23 @@
 ### 사용 라이브러리
 > Navigation Jetpack(2.3.2), Dagger2-Hilt(2.28-alpha), Retrofit2(2.9.0), Moshi(1.11.0), rxJava(3.0.9)
 > Socket.io(1.0.0), Amplify(1.16.3), Glide(4.11.0), Firebase-bom(26.5.0), WorkManager(2.5.0)
-> Node.js(Express), Node.js(mysql), Node.js(socket.io)
+> Node.js(Express), Node.js(mysql), Node.js(socket.io)  
+  
+## 세부 기능  
+### 회원 관리  
+#### 회원가입  
+![스크린샷 2021-03-11 오후 11 48 42](https://user-images.githubusercontent.com/48707020/110806580-8cf58180-82c5-11eb-8cc2-59f678f317de.png)  
+- AWS Amplify Authentication을 통하여 메일을 통해 인증을 거쳐 회원가입을 한다.  
+#### 로그인  
+- AWS Amplify Authentication을 통해 아이디와 비밀번호를 확인한 후 로그인을 한다.  
 
+### 친구 관리  
+#### 친구 검색  
+![search friends](https://user-images.githubusercontent.com/48707020/110806642-9aab0700-82c5-11eb-8fc3-3b0f1acadf6f.gif)  
+  
+#### 친구 찾기, 추가  
+![add friend](https://user-images.githubusercontent.com/48707020/110806622-954dbc80-82c5-11eb-9bc3-ed7ebc8d8de7.gif)  
+- 정규식을 이용하여 검색한 이름과 관련 있는 친구들의 목록을 나열한 후 추가하고 싶은 친구를 추가할 수 있다.  
+
+#### 1:1 채팅하기
+![private chat](https://user-images.githubusercontent.com/48707020/110807692-a64afd80-82c6-11eb-90a1-194b188e2b90.gif)  
