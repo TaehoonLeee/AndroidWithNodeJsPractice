@@ -56,3 +56,8 @@
 
 #### 1:1 채팅하기
 ![private chat](https://user-images.githubusercontent.com/48707020/110807692-a64afd80-82c6-11eb-90a1-194b188e2b90.gif)  
+  
+### 채팅 관리
+#### 실시간 채팅  
+![realtime chat](https://user-images.githubusercontent.com/48707020/110809248-10b06d80-82c8-11eb-834e-7dd94fd65825.gif)  
+- socket.io 통신을 이용한 실시간 채팅과 multer, cloudinary를 이용한 이미지 주고 
