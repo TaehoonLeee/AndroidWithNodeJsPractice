@@ -1,9 +1,30 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
+var fs = require('fs');
+var cloudinary = require('cloudinary').v2;
 const mysql = require('mysql');
 const admin = require('firebase-admin');
+const path = require('path');
 
-let serAccount = require('../nodejs-556bd-firebase-adminsdk-4rvpy-73476628bb.json');
+cloudinary.config({
+	cloud_name: 'dnj8sgghi',
+	api_key: '331428219932199',
+	api_secret: 'X8e1GGcwX0Ya3_u0ahfpJPn72qA'
+});
+
+const imageUpload = multer({
+	storage: multer.diskStorage({
+		destination: (req, file, cb) => {
+			cb(null, `${__dirname}/../public/images`);
+		},
+		filename: (req, file, cb) => {
+			cb(null, file.originalname);
+		},
+	}),
+});
+
+let serAccount = require('/Users/taehoonlee//nodejs-556bd-firebase-adminsdk-4rvpy-8100fd94bb.json');
 
 admin.initializeApp({
 	credential: admin.credential.cert(serAccount),
@@ -52,6 +73,15 @@ function getResult4(sql, message, timeStamp, index, roomName) {
 	return new Promise(function(resolve, reject) {
 		pool.query(sql, [message, timeStamp, index, roomName], function(err, result) {
 			if(err) { reject(erR) }
+			else { resolve(result) }
+		})
+	})
+}
+
+function getResult5(sql, sender, timeStamp, chatRoomName, category, url) {
+	return new Promise(function(resolve, reject) {
+		pool.query(sql, [sender, timeStamp, chatRoomName, category, url], function(err, result) {
+			if(err) { reject(err) }
 			else { resolve(result) }
 		})
 	})
@@ -135,6 +165,8 @@ router.get('/chat/:roomName', function(req, res, next) {
 					o.sender = rows[i].sender;
 					o.message = rows[i].message;
 					o.timeStamp = rows[i].timeStamp;
+					o.category = rows[i].category;
+					o.url = rows[i].url;
 					arr.push(o);
 				}
 				obj.messages = arr;
@@ -155,6 +187,8 @@ router.get('/chat/:roomName', function(req, res, next) {
                		o.sender = rows[i].sender;
                		o.message = rows[i].message;
                		o.timeStamp = rows[i].timeStamp;
+			o.category = rows[i].category;
+					o.url = rows[i].url;
                		arr.push(o);
            		}
            		obj.messages = arr;
@@ -333,5 +367,37 @@ router.get('/fcmsend', async function(req, res, next) {
 		})
 });
 
+router.post('/exit', function(req, res, next) {
+	var body = req.body;
+
+	client.query("DELETE FROM chatRoomJoin WHERE userName=? AND roomName=?", [body.userName, body.roomName], function(err, rows, fields) {
+		if(err) { console.log(err); }
+		else {
+			res.send('{"code":1, "msg":"successed"}');
+		}
+	});
+});
+
+router.post('/uploadImage', imageUpload.single('img'), function(req, res) {
+	console.log(req.body);
+	var sender = req.body.sender;
+	var roomName = req.body.roomName;
+	var timeStamp = req.body.timeStamp;
+
+	var url = "";
+
+	cloudinary.uploader.upload(req.file.path, async (error, result) => {
+		url = result.url;
 		
+		var query = "INSERT INTO Message(sender, message, timeStamp, chatRoomName, category, url) VALUES(?, 'image', ?, ?, ?, ?)";
+		var queryRes = await getResult5(query, sender, timeStamp, roomName, 'img', url);
+		
+		query = "UPDATE chatRoom SET topMessage=?, topTimeStamp=?, topIndex=? where name=?"
+		await getResult4(query, 'image', timeStamp, queryRes.insertId, roomName);
+		console.log(result, error);
+		
+		res.send('{"code":1, "msg":"successed"}');
+	});
+});
+
 module.exports = router;

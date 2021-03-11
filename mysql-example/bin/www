@@ -67,9 +67,7 @@ io.sockets.on('connection', function(socket) {
 		var roomName = jsonData.roomName;
 		var message = jsonData.message;
 		console.log('New message is received');
-		//console.log(`Room Name : ${data}`);
 		console.log(`Room Name : ${roomName}, Message : ${message}`);
-		//socket.broadcast.to(`${data}`).emit('updateChat', `${data}`);
 		socket.broadcast.to(`${roomName}`).emit('updateChat', `${message}`);
 	});
 	socket.on('quit', function(data) {
